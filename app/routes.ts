@@ -39,10 +39,12 @@ export default routes;
 
 // List of public routes that don't require authentication
 export const publicRoutesList: string[] = [
-  '/dicer/login',
   '/client/login',
-  '/forgot-password',
-  '/reset-password',
+  '/client/forgot-password',
+  '/client/reset-password',
+  '/dicer/login',
+  '/dicer/forgot-password',
+  '/dicer/reset-password',
 ];
 
 // Route constants
