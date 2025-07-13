@@ -59,7 +59,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   // Show error message if no accounts available
   if (accounts.length === 0 && !accountsLoading) {
     return (
-      <Box sx={{ p: 3 }}>
+      <Box>
         <Typography
           variant="h4"
           sx={{

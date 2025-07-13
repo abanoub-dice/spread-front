@@ -27,13 +27,13 @@ axiosInstance.interceptors.response.use(
   async (err: any) => {
     if (err.response) {
       // Access Token was expired
-      if (err.response.status === 401 && !window.location.pathname.includes('/login')) {
-        setTimeout(() => {
-          window.location.href = '/dicer/login';
-          localStorage.clear();
-        }, 2000);
-        return Promise.reject(err);
-      }
+      // if (err.response.status === 401 && !window.location.pathname.includes('/login')) {
+      //   setTimeout(() => {
+      //     window.location.href = '/dicer/login';
+      //     localStorage.clear();
+      //   }, 2000);
+      //   return Promise.reject(err);
+      // }
       // if (err.response.status === 403) {
       // }
 
