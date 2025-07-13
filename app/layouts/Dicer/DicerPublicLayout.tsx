@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Box, Container, Paper } from '@mui/material';
 import logo from '@/assets/spread-logo.svg';
 
@@ -29,17 +29,35 @@ const logoBoxSx = {
   },
 };
 
+// Public routes that should use the centered layout
+const publicRoutes = ['/dicer/login', '/dicer/forgot-password', '/dicer/reset-password'];
+
 export default function DicerPublicLayout() {
+  const location = useLocation();
+  const isPublicRoute = publicRoutes.includes(location.pathname);
+
+  // For public routes (login, forgot password, etc.), use the centered layout
+  if (isPublicRoute) {
+    return (
+      <Container component="main" maxWidth="xs">
+        <Box sx={containerSx}>
+          <Paper elevation={3} sx={paperSx}>
+            <Box component="figure" sx={logoBoxSx}>
+              <img src={logo} alt="Grid by Dice logo" />
+            </Box>
+            <Outlet />
+          </Paper>
+        </Box>
+      </Container>
+    );
+  }
+
+  // For protected routes, use the full layout (similar to DicerLayout)
   return (
-    <Container component="main" maxWidth="xs">
-      <Box sx={containerSx}>
-        <Paper elevation={3} sx={paperSx}>
-          <Box component="figure" sx={logoBoxSx}>
-            <img src={logo} alt="Grid by Dice logo" />
-          </Box>
-          <Outlet />
-        </Paper>
-      </Box>
-    </Container>
+    <div className="flex h-screen bg-gray-100">
+      <main className="flex-1">
+        <Outlet />
+      </main>
+    </div>
   );
 } 

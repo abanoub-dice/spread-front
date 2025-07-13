@@ -1,14 +1,33 @@
 import { type RouteConfig, index, route } from '@react-router/dev/routes';
 
-const clientPublicRoutes = [
+const routes = [
+  // Client routes with ClientLayout
+  route('client', 'layouts/Client/ClientLayout.tsx', [
+    index('routes/client/protected/ClientHome.tsx'),
+  ]),
+  
+  // Dicer routes with DicerLayout
+  route('dicer', 'layouts/Dicer/DicerLayout.tsx', [
+    index('routes/dicer/protected/calendar/CalendarView.tsx'),
+    route('content', 'routes/dicer/protected/content/ContentManager.tsx'),
+    route('content/:id', 'routes/dicer/protected/PostView.tsx'),
+    route('upload', 'routes/dicer/protected/UploadContent.tsx'),
+    route('insights', 'routes/dicer/protected/insights/Insights.tsx'),
+    route('admin', 'routes/dicer/protected/admin/AdminPanel.tsx', [
+      route('clients', 'routes/dicer/protected/admin/Clients.tsx'),
+      route('accounts', 'routes/dicer/protected/admin/Accounts.tsx'),
+      route('team', 'routes/dicer/protected/admin/TeamMembers.tsx'),
+    ]),
+  ]),
+  
+  // Public client routes
   route('client', 'layouts/Client/ClientPublicLayout.tsx', [
     route('login', 'routes/client/public/Login.tsx'),
     route('forgot-password', 'routes/client/public/ForgotPassword.tsx'),
     route('reset-password', 'routes/client/public/ResetPassword.tsx'),
   ]),
-] satisfies RouteConfig;
 
-const dicerPublicRoutes = [
+  // Public dicer routes
   route('dicer', 'layouts/Dicer/DicerPublicLayout.tsx', [
     route('login', 'routes/dicer/public/Login.tsx'),
     route('forgot-password', 'routes/dicer/public/ForgotPassword.tsx'),
@@ -16,31 +35,15 @@ const dicerPublicRoutes = [
   ]),
 ] satisfies RouteConfig;
 
-// Public routes that don't require authentication
-const publicRoutes = [
-  ...dicerPublicRoutes,
-  ...clientPublicRoutes,
-] satisfies RouteConfig;
-
-// // Protected routes that require Dicer authentication
-// const dicerProtectedRoutes = [
-//   route('dicer', 'layouts/Dicer/DicerLayout.tsx', [
-//     index('routes/Home.tsx'),
-//   ]),
-// ] satisfies RouteConfig;
-
-// // Protected routes that require Client authentication
-// const clientProtectedRoutes = [
-//   route('client', 'layouts/Client/ClientLayout.tsx', [
-//     index('routes/Home.tsx'),
-//   ]),
-// ] satisfies RouteConfig;
-
-// Combine all routes
-export default [...publicRoutes] satisfies RouteConfig;
+export default routes;
 
 // List of public routes that don't require authentication
-export const publicRoutesList: string[] = ['/dicer/login', '/client/login', '/forgot-password', '/reset-password'];
+export const publicRoutesList: string[] = [
+  '/dicer/login',
+  '/client/login',
+  '/forgot-password',
+  '/reset-password',
+];
 
 // Route constants
 export const ADMIN_ROUTES = {
