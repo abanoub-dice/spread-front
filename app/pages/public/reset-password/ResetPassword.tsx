@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
 import { Box, Typography, useTheme } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
 import { resetPassword } from '~/utils/api/authApis';
@@ -37,7 +37,9 @@ export default function ResetPassword() {
   const { showToaster } = useToaster();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
-
+  const location = useLocation();
+  const userType = location.pathname.includes('/dicer/') ? 'dicer' : 'client';
+  
   const {
     register,
     handleSubmit,
@@ -51,13 +53,13 @@ export default function ResetPassword() {
     mutationFn: (data: ResetPasswordFormData) => {
       if (!token) {
         showToaster('please use the link provided in the email', 'error');
-        navigate('/forgot-password', { replace: true });
+        navigate(`/${userType}/forgot-password`, { replace: true });
       }
       return resetPassword({ token: token as string, password: data.password });
     },
     onSuccess: () => {
       showToaster('Password has been reset successfully', 'success');
-      navigate('/dicer/login', { replace: true });
+      navigate(`/${userType}/login`, { replace: true });
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       showToaster(error.response?.data?.message || 'Failed to reset password', 'error');

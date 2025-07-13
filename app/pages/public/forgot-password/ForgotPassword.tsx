@@ -3,15 +3,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
 import { Box, Typography, useTheme } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
-import { userLogin } from '~/utils/api/authApis';
-import type { LoginCredentials } from '~/utils/interfaces/user';
-import { useAppDispatch } from '~/utils/store/hooks/hooks';
-import { setUser } from '~/utils/store/slices/userSlice';
-import type { AxiosError } from 'axios';
-import type { ErrorResponse } from '~/utils/api/axiosInstance';
+import { sendResetLink } from '~/utils/api/authApis';
 import { useToaster } from '~/components/Toaster';
 
 const schema = yup
@@ -20,59 +15,52 @@ const schema = yup
       .string()
       .required('Email is required')
       .matches(/^[a-zA-Z0-9._%+-]{2,}@[a-zA-Z0-9.-]{2,}\.[a-zA-Z]{2,}$/, 'Invalid email format'),
-    password: yup
-      .string()
-      .required('Password is required')
-      .min(8, 'Password must be at least 8 characters'),
   })
   .required();
 
+type ForgotPasswordFormData = yup.InferType<typeof schema>;
+
 export function meta() {
-  return [{ title: 'Login' }, { name: 'description', content: 'Login to your account' }];
+  return [{ title: 'Forgot Password' }, { name: 'description', content: 'Get a reset link to your email' }];
 }
 
-export default function Login() {
+export default function ForgotPassword() {
   const theme = useTheme();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
   const { showToaster } = useToaster();
-
-  // Determine user type from URL path
+  const location = useLocation();
   const userType = location.pathname.includes('/dicer/') ? 'dicer' : 'client';
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginCredentials>({
+  } = useForm<ForgotPasswordFormData>({
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
 
-  const loginMutation = useMutation({
-    mutationFn: (data: LoginCredentials) => userLogin({ ...data, userType }),
-    onSuccess: data => {
-      dispatch(setUser({ user: data.user, token: data.access_token }));
-      // Navigate based on user type
-      const redirectPath = userType === 'client' ? '/client' : '/';
-      navigate(redirectPath, { replace: true });
+  const resetLinkMutation = useMutation({
+    mutationFn: sendResetLink,
+    onSuccess: (data) => {
+      showToaster('Password reset link has been sent to your email', 'success');
     },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      showToaster(error.response?.data?.message || 'Failed to login', 'error');
+    onError: (error) => {
+      showToaster('Failed to send reset link. Please try again.', 'error');
     },
   });
 
-  const onSubmit = (data: LoginCredentials) => {
-    loginMutation.mutate(data);
+  const onSubmit = (data: ForgotPasswordFormData) => {
+    resetLinkMutation.mutate(data);
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
-      <Typography
-        component="h1"
-        variant="formHeader"
-        sx={{
+      <Typography 
+        component="h1" 
+        variant="formHeader" 
+        sx={{ 
           my: 2,
           position: 'relative',
           color: theme.palette.primary.main,
@@ -84,11 +72,11 @@ export default function Login() {
             width: '100%',
             height: '2px',
             backgroundColor: theme.palette.primary.main,
-            borderRadius: '1px',
-          },
+            borderRadius: '1px'
+          }
         }}
       >
-        Sign In - {userType === 'dicer' ? 'Dicer' : 'Client'}
+        Forgot Password
       </Typography>
       <Box
         component="form"
@@ -106,21 +94,9 @@ export default function Login() {
           autoComplete="email"
         />
 
-        <TextField
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          error={errors.password?.message}
-          register={register}
-          isRequired
-          autoComplete="current-password"
-          showPasswordToggle
-        />
-
         <Box sx={{ textAlign: 'left' }}>
           <Typography variant="caption" component="span">
-            Forgot your password?{' '}
+            Back to{'  '}
             <Box
               component="span"
               sx={{
@@ -131,17 +107,18 @@ export default function Login() {
                   color: 'primary.dark',
                 },
               }}
-              onClick={() => navigate('/forgot-password')}
+              onClick={() => navigate(`/${userType}/login`)}
             >
-              Reset it here
+              login?
             </Box>
           </Typography>
         </Box>
 
-        <FormButton label="Sign in" isLoading={loginMutation.isPending} />
+        <FormButton 
+          label="Send Reset Link" 
+          isLoading={resetLinkMutation.isPending}
+        />
       </Box>
     </>
   );
 }
-
-

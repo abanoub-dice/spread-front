@@ -29,7 +29,7 @@ const logoBoxSx = {
   },
 };
 
-export default function PublicLayout() {
+export default function DicerPublicLayout() {
   return (
     <Container component="main" maxWidth="xs">
       <Box sx={containerSx}>

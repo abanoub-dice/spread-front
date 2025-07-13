@@ -100,29 +100,29 @@ function AppContent() {
     });
 
     // Handle public routes first - redirect immediately if token exists
-    if (isPublicRoute) {
-      if (hasToken) {
-        dispatch(showLoader());
-        navigate('/', { replace: true });
-        dispatch(hideLoader());
-        return;
-      }
-    }
+    // if (isPublicRoute) {
+    //   if (hasToken) {
+    //     dispatch(showLoader());
+    //     navigate('/', { replace: true });
+    //     dispatch(hideLoader());
+    //     return;
+    //   }
+    // }
 
-    if (!isPublicRoute) {
-      if (!hasToken) {
-        navigate('/dicer/login', { replace: true });
-        return;
-      }
+    // if (!isPublicRoute) {
+    //   if (!hasToken) {
+    //     navigate('/dicer/login', { replace: true });
+    //     return;
+    //   }
 
-      if (hasToken && !authenticated && !authChecked.current) {
-        authChecked.current = true;
-        dispatch(showLoader());
-        dispatch(checkAuth());
-        dispatch(hideLoader());
-        return;
-      }
-    }
+    //   if (hasToken && !authenticated && !authChecked.current) {
+    //     authChecked.current = true;
+    //     dispatch(showLoader());
+    //     dispatch(checkAuth());
+    //     dispatch(hideLoader());
+    //     return;
+    //   }
+    // }
   }, [dispatch, hasToken, authenticated, location.pathname, navigate]);
 
   // Show loader only if we have a token and are checking auth
