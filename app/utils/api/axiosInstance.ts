@@ -5,7 +5,7 @@ export interface ErrorResponse {
 }
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_DATABASE_URL,
+  baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
 axiosInstance.interceptors.request.use(

@@ -101,7 +101,7 @@ const Banner: React.FC = () => {
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ color: 'text.lightText', maxWidth: '220px', textAlign: 'center', mt: 3 }}
+                sx={{ color: 'text.lightText', maxWidth: '220px', textAlign: 'center', mt: 2 }}
               >
                 {step.description}
               </Typography>

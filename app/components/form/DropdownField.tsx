@@ -44,7 +44,7 @@ const styles = {
 } as const;
 
 interface DropdownFieldProps {
-  label: string;
+  label?: string;
   name: string;
   options: { label: string; value: string }[];
   value: string | string[];
