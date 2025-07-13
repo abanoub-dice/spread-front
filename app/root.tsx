@@ -21,9 +21,9 @@ import { Provider } from 'react-redux';
 import { store } from './utils/store/store';
 import { useAppSelector, useAppDispatch } from './utils/store/hooks/hooks';
 import { checkAuth } from './utils/store/slices/userSlice';
-import { Loader } from './components/Loader';
 import { hideLoader, showLoader } from './utils/store/slices/loaderSlice';
 import { ToasterProvider } from './components/Toaster';
+import { Loader } from './components/Loader';
 import Dialog from './components/Dialog';
 
 // Create a client
@@ -60,6 +60,10 @@ export const links: Route.LinksFunction = () => [
   {
     rel: 'stylesheet',
     href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
+  },
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap',
   },
 ];
 

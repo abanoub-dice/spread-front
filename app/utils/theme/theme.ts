@@ -7,7 +7,7 @@ import { typographyVariants } from './typography';
 const themeOptions: ThemeOptions = {
   palette,
   typography: {
-    fontFamily: `ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
+    fontFamily: `"Ubuntu", sans-serif`,
     ...typographyVariants,
   },
   components: {

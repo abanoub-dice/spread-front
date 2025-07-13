@@ -45,6 +45,7 @@ declare module "@mui/material/styles" {
 
   interface TypeText {
     lightText: string;
+    black: string;
   }
 }
 

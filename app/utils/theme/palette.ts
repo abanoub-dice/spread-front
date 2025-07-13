@@ -27,7 +27,8 @@ export const customColors: Partial<CustomColors> = {
 export const text: Partial<TypeText> = {
   primary: '#3F3F46',
   secondary: '#535863',
-  lightText: '#DBD6D6',
+  lightText: '#4b5563',
+  black: '#000',
 };
 
 const paletteOptions: PaletteOptions = {

@@ -25,30 +25,30 @@ export const h1 = {
 };
 
 export const h2 = {
-  fontSize: '18px',
+  fontSize: '24px',
   fontStyle: 'normal',
-  fontWeight: 600,
+  fontWeight: 500,
   lineHeight: '28px',
   '@media (max-width:1024px)': {
-    fontSize: '16px',
+    fontSize: '23px',
     lineHeight: '26px',
   },
   '@media (max-width:687px)': {
-    fontSize: '15px',
+    fontSize: '22px',
     lineHeight: '24px',
   },
 };
 
 export const h3 = {
-  fontSize: '15px',
+  fontSize: '18px',
   fontStyle: 'normal',
-  fontWeight: 700,
+  fontWeight: 600,
   lineHeight: 'normal',
   '@media (max-width:1024px)': {
-    fontSize: '13px',
+    fontSize: '17px',
   },
   '@media (max-width:687px)': {
-    fontSize: '12px',
+    fontSize: '16px',
   },
 };
 
@@ -122,16 +122,16 @@ export const subHeader = {
 };
 
 export const body1 = {
-  fontSize: '14px',
+  fontSize: '15px',
   fontStyle: 'normal',
   fontWeight: 400,
   lineHeight: '16px',
   '@media (max-width:1024px)': {
-    fontSize: '12px',
+    fontSize: '14px',
     lineHeight: '15px',
   },
   '@media (max-width:687px)': {
-    fontSize: '11px',
+    fontSize: '13px',
     lineHeight: '14px',
   },
 };

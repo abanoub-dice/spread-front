@@ -6,7 +6,6 @@ export default function Layout() {
     <div className="h-screen w-full bg-gray-100">
       <Navbar
         avatarUrl={undefined}
-        onChangePassword={() => alert('Change Password')}
         onLogout={() => alert('Logout')}
       />
       <main>

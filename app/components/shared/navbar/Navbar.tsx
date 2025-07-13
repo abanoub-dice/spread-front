@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   AppBar,
   Toolbar,
@@ -16,22 +17,25 @@ import {
 import { IoNotificationsOutline, IoNotifications } from 'react-icons/io5';
 import { IoSettingsOutline, IoSettings } from 'react-icons/io5';
 import SpreadLogo from '~/assets/spread-logo.svg';
+import ChangePasswordModal from '~/components/ChangePasswordModal';
+import Dialog from '~/components/Dialog';
+import { setDialogue } from '~/utils/store/slices/dialogueSlice';
 
 interface NavbarProps {
   avatarUrl?: string;
-  onChangePassword: () => void;
   onLogout: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
   avatarUrl,
-  onChangePassword,
   onLogout,
 }) => {
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null);
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
+  const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleNotificationClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotificationAnchorEl(event.currentTarget);
@@ -53,6 +57,30 @@ const Navbar: React.FC<NavbarProps> = ({
     } else if (location.pathname.startsWith('/dicer')) {
       navigate('/dicer');
     }
+  };
+
+  const handleChangePassword = () => {
+    setIsChangePasswordModalOpen(true);
+    handleClose();
+  };
+
+  const handleLogout = () => {
+    dispatch(setDialogue({
+      show: true,
+      title: 'Confirm Logout',
+      text: 'Are you sure you want to logout?',
+      acceptLabel: 'Logout',
+      acceptColor: 'error',
+      closable: true,
+      onAccept: () => {
+        onLogout();
+      },
+    }));
+    handleClose();
+  };
+
+  const handleCloseChangePasswordModal = () => {
+    setIsChangePasswordModalOpen(false);
   };
 
   return (
@@ -214,23 +242,26 @@ const Navbar: React.FC<NavbarProps> = ({
         }}
       >
         <MenuItem 
-          onClick={() => {
-            onChangePassword();
-            handleClose();
-          }}
+          onClick={handleChangePassword}
         >
           Change Password
         </MenuItem>
         <Divider />
         <MenuItem 
-          onClick={() => {
-            onLogout();
-            handleClose();
-          }}
+          onClick={handleLogout}
         >
           Logout
         </MenuItem>
       </Menu>
+
+      {/* Change Password Modal */}
+      <ChangePasswordModal
+        open={isChangePasswordModalOpen}
+        onClose={handleCloseChangePasswordModal}
+      />
+
+      {/* Dialog */}
+      <Dialog />
     </AppBar>
   );
 };
