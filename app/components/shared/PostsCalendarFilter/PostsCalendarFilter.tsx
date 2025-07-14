@@ -1,7 +1,7 @@
 import React from 'react';
 import StatusBadge from '../StatusBadge';
 import { DropdownField } from '../../form/DropdownField';
-import type { Platform, Status, Type } from '~/routes/client/protected/ClientHome';
+import type { Platform, Status, Type } from '~/pages/protected/calendar-page/CalendarPage';
 
 interface PostsCalendarFilterProps {
   status: Status;

@@ -1,8 +1,8 @@
 import React from 'react';
-import type { Status, Platform, Type } from '~/routes/client/protected/ClientHome';
+import type { Status, Platform, Type } from '~/pages/protected/calendar-page/CalendarPage';
 import type { Dayjs } from 'dayjs';
 import { Box, Typography, Button, Grid } from '@mui/material';
-import ClientPostCard, { type Post, type ClientWithActions } from '~/components/client/ClientPostCard/ClientPostCard';
+import ClientPostCard, { type Post, type ClientWithActions } from '../ClientPostCard/ClientPostCard';
 
 interface PostsListProps {
   status: Status;
