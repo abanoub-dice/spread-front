@@ -11,7 +11,7 @@ export default function Layout() {
   };
 
   return (
-    <div className="h-screen w-full bg-gray-100">
+    <div className="h-screen w-full">
       <Navbar avatarUrl={undefined} onLogout={() => alert('Logout')} />
       <Box sx={{ p: 3 }}>
         <DashboardHeader onGenerateReport={handleGenerateReport} />

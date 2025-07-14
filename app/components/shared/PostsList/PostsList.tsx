@@ -2,7 +2,7 @@ import React from 'react';
 import type { Status, Platform, Type } from '~/routes/client/protected/ClientHome';
 import type { Dayjs } from 'dayjs';
 import { Box, Typography, Button, Grid } from '@mui/material';
-import ClientPostCard, { type Post } from '~/components/client/ClientPostCard/ClientPostCard';
+import ClientPostCard, { type Post, type ClientWithActions } from '~/components/client/ClientPostCard/ClientPostCard';
 
 interface PostsListProps {
   status: Status;
@@ -98,7 +98,7 @@ const PostsList: React.FC<PostsListProps> = ({ status, platform, type, selectedD
             decision_maker: 0,
           },
         },
-      ],
+      ] as ClientWithActions[],
       media: [],
     },
     // Post 2
@@ -188,17 +188,87 @@ const PostsList: React.FC<PostsListProps> = ({ status, platform, type, selectedD
       clients_with_actions: [],
       media: [],
     },
+    // Post 5
+    {
+      id: 7,
+      title: 'dasda',
+      slug: 'dasda',
+      EnCaption: null,
+      ArCaption: null,
+      hashtags: null,
+      type: ['Story'],
+      platforms: ['Instagram'],
+      approved_by_client: true,
+      sponsored: 0,
+      first_edits_requested: false,
+      first_edits_done: false,
+      second_edits_requested: false,
+      second_edits_done: false,
+      publishing_at: '2025-07-12 15:00:00',
+      is_arabic_first: 0,
+      rate: 0,
+      tiktok_title_caption: null,
+      tiktok_caption: null,
+      created_at: '2025-07-02T12:00:22.000000Z',
+      updated_at: '2025-07-06T09:51:01.000000Z',
+      account_id: 1,
+      has_unread_messages: false,
+      status: 'Approved',
+      clients_with_actions: [
+        {
+          id: 1,
+          name: 'john smith name edited',
+          email: 'john.smith@example.com',
+          phone: '+123456789',
+          account_id: 1,
+          deleted_at: null,
+          created_at: '2025-04-14T14:12:33.000000Z',
+          updated_at: '2025-04-17T13:14:59.000000Z',
+          actions: [
+            {
+              id: 49,
+              action: 'approval',
+              comment: null,
+              round: 1,
+              created_at: '2025-07-02T13:28:22.000000Z',
+            },
+          ],
+          pivot: {
+            post_id: 7,
+            client_id: 1,
+            created_at: '2025-07-02T12:00:22.000000Z',
+            updated_at: '2025-07-06T09:51:01.000000Z',
+            role: 'editor',
+            decision_maker: 1,
+          },
+        },
+      ] as ClientWithActions[],
+      media: [
+        {
+          id: 29,
+          post_id: 7,
+          original_name: '1751531461533_1_5mb.mp4',
+          type: 'video',
+          url: 'https://digital-calendar-media.dicema.com/Posts/Media/7/Ie4xDe77fCAHSAMrcQCy7rm8QBOE5UzIKs4xvnuy.mp4',
+          video_poster_image_url: null,
+          original_quality_video_poster_url: null,
+          order: null,
+          original_quality: false,
+          related_original_media_id: null,
+          created_at: '2025-07-03T08:31:09.000000Z',
+          updated_at: '2025-07-03T08:31:09.000000Z',
+        },
+      ],
+    },
   ];
 
   return (
-    <>
+    <Box m={4}>
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          m: 2,
-          p: 2,
         }}
       >
         <Typography variant="h2" sx={{ fontWeight: 700, color: 'text.primary' }}>
@@ -226,14 +296,14 @@ const PostsList: React.FC<PostsListProps> = ({ status, platform, type, selectedD
           {posts.length} Post{posts.length > 1 ? 's' : ''}
         </Button>
       </Box>
-      <Grid container spacing={2} px={2}>
+      <Grid container spacing={2} mt={4}>
         {posts.map(post => (
           <Grid key={post.id} size={{ xs: 12, sm: 6, md: 6 }}>
             <ClientPostCard post={post} />
           </Grid>
         ))}
       </Grid>
-    </>
+    </Box>
   );
 };
 

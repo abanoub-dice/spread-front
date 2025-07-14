@@ -1,9 +1,36 @@
 import React from 'react';
 import { Box, Typography, Chip, Stack } from '@mui/material';
 import StatusBadge from '../../shared/StatusBadge';
+import PostCardActions from '../PostCardActions/PostCardActions';
 
-export interface ClientPostCardProps {
-  post: Post;
+export interface ClientAction {
+  id: number;
+  action: string;
+  comment: string | null;
+  round: number;
+  created_at: string;
+}
+
+export interface ClientPivot {
+  post_id: number;
+  client_id: number;
+  created_at: string;
+  updated_at: string;
+  role: string;
+  decision_maker: number;
+}
+
+export interface ClientWithActions {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  account_id: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+  actions?: ClientAction[];
+  pivot: ClientPivot;
 }
 
 export interface Post {
@@ -12,7 +39,7 @@ export interface Post {
   slug: string;
   EnCaption: string | null;
   ArCaption: string | null;
-  hashtags: string[];
+  hashtags: string[] | null;
   type: string[];
   platforms: string[];
   approved_by_client: boolean;
@@ -31,8 +58,27 @@ export interface Post {
   account_id: number;
   has_unread_messages: boolean;
   status: 'All' | 'Approved' | 'Pending' | 'Rejected' | 'Sponsored';
-  clients_with_actions: any[];
-  media: { url: string }[];
+  clients_with_actions: ClientWithActions[];
+  media: PostMedia[];
+}
+
+export interface PostMedia {
+  id: number;
+  post_id: number;
+  original_name: string;
+  type: string;
+  url: string;
+  video_poster_image_url: string | null;
+  original_quality_video_poster_url: string | null;
+  order: number | null;
+  original_quality: boolean;
+  related_original_media_id: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClientPostCardProps {
+  post: Post;
 }
 
 const formatTime12h = (dateString: string) => {
@@ -50,12 +96,12 @@ const ClientPostCard: React.FC<ClientPostCardProps> = ({ post }) => {
   return (
     <Box
       sx={{
-        border: '1px solid #eee',
+        border: '1px solid #888888',
         borderRadius: 2,
         p: 2,
         minWidth: 400,
         width: '100%',
-        boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
+        boxShadow: '0 0px 8px 4px rgba(0,0,0,0.1)',
         display: 'flex',
         flexDirection: 'column',
         gap: 1.5,
@@ -64,12 +110,23 @@ const ClientPostCard: React.FC<ClientPostCardProps> = ({ post }) => {
     >
       {/* Media */}
       {post.media && post.media.length > 0 && (
-        <Box sx={{ mb: 1, borderRadius: 1, overflow: 'hidden', maxHeight: 180 }}>
-          <img
-            src={post.media[0].url}
-            alt={post.title}
-            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-          />
+        <Box sx={{ mb: 1, borderRadius: 1, overflow: 'hidden' }}>
+          {post.media[0].type === 'image' ? (
+            <img
+              src={post.media[0].url}
+              alt={post.title}
+              style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+            />
+          ) : post.media[0].type === 'video' ? (
+            <video
+              controls
+              style={{ width: '100%', height: 180, objectFit: 'cover', background: '#000' }}
+              poster={post.media[0].video_poster_image_url || undefined}
+            >
+              <source src={post.media[0].url} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : null}
         </Box>
       )}
       {/* Platforms & Type & Time */}
@@ -81,8 +138,8 @@ const ClientPostCard: React.FC<ClientPostCardProps> = ({ post }) => {
         sx={{ mb: 0.5 }}
       >
         <Stack direction="column" spacing={1} sx={{ mb: 0.5, flex: 1 }}>
-          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5, }}>
-            {post.platforms.map(platform => (
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
+            {post.platforms.map((platform: string) => (
               <Chip
                 key={platform}
                 label={platform}
@@ -98,9 +155,9 @@ const ClientPostCard: React.FC<ClientPostCardProps> = ({ post }) => {
               />
             ))}
           </Stack>
-          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5, }}>
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
             {' '}
-            {post.type.map(type => (
+            {post.type.map((type: string) => (
               <Chip
                 key={type}
                 label={type}
@@ -145,7 +202,7 @@ const ClientPostCard: React.FC<ClientPostCardProps> = ({ post }) => {
       )}
       {/* Hashtags */}
       <Box sx={{ mb: 0.5 }}>
-        {post.hashtags.map(tag => (
+        {post.hashtags?.map((tag: string) => (
           <Typography
             key={tag}
             variant="body2"
@@ -159,6 +216,10 @@ const ClientPostCard: React.FC<ClientPostCardProps> = ({ post }) => {
       {/* Status */}
       <Box sx={{ mt: 1 }}>
         <StatusBadge status={post.status} />
+      </Box>
+      {/* Actions */}
+      <Box mt={2}>
+        <PostCardActions clients_with_actions={post.clients_with_actions} />
       </Box>
     </Box>
   );

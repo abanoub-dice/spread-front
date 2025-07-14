@@ -4,7 +4,7 @@ import Banner from '../../components/client/Banner';
 
 export default function Layout() {
   return (
-    <div className="h-screen w-full bg-gray-100">
+    <div className="h-screen w-full">
       <Navbar avatarUrl="https://i.pravatar.cc/150?img=3" onLogout={() => alert('Logout')} />
       <Banner />
       <main>
