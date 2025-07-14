@@ -58,24 +58,35 @@ const Banner: React.FC = () => {
         </Typography>
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            gap: { xs: 6, md: 2 },
-            px: { xs: 2, md: 0 },
+            display: { xs: 'none', md: 'block' }, // Hide old flex layout on all screens
+          }}
+        >
+          {/* Old layout hidden, replaced by Grid below */}
+        </Box>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: 'repeat(2, 1fr)',
+              md: 'repeat(4, 1fr)',
+            },
+            gap: { xs: 4, md: 2 },
+            justifyContent: 'center',
+            alignItems: 'stretch',
           }}
         >
           {steps.map(step => (
             <Box
               key={step.title}
               sx={{
-                flex: 1,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 textAlign: 'center',
                 px: { xs: 0, md: 2 },
+                mb: { xs: 2, md: 0 },
+                width: '100%',
+                boxSizing: 'border-box',
               }}
             >
               <Box
@@ -114,3 +125,4 @@ const Banner: React.FC = () => {
 };
 
 export default Banner;
+
