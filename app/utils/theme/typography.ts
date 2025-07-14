@@ -52,6 +52,39 @@ export const h3 = {
   },
 };
 
+export const body1 = {
+  fontSize: '15px',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '16px',
+  '@media (max-width:1024px)': {
+    fontSize: '14px',
+    lineHeight: '15px',
+  },
+  '@media (max-width:687px)': {
+    fontSize: '13px',
+    lineHeight: '14px',
+  },
+};
+
+export const caption = {
+  fontSize: '13px',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  lineHeight: '16px',
+  '@media (max-width:1024px)': {
+    fontSize: '12px',
+    lineHeight: '14px',
+  },
+  '@media (max-width:687px)': {
+    fontSize: '11px',
+    lineHeight: '12px',
+  },
+};
+
+
+// NOT IN USE YET
+
 export const h4 = {
   fontSize: '28px',
   fontStyle: 'normal',
@@ -121,35 +154,8 @@ export const subHeader = {
   },
 };
 
-export const body1 = {
-  fontSize: '15px',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: '16px',
-  '@media (max-width:1024px)': {
-    fontSize: '14px',
-    lineHeight: '15px',
-  },
-  '@media (max-width:687px)': {
-    fontSize: '13px',
-    lineHeight: '14px',
-  },
-};
 
-export const caption = {
-  fontSize: '12px',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: '16px',
-  '@media (max-width:1024px)': {
-    fontSize: '10px',
-    lineHeight: '14px',
-  },
-  '@media (max-width:687px)': {
-    fontSize: '9px',
-    lineHeight: '12px',
-  },
-};
+
 
 export const formHeader = {
   fontSize: '24px',
