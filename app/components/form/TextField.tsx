@@ -14,6 +14,7 @@ interface TextFieldProps {
   autoComplete?: string;
   showPasswordToggle?: boolean;
   disabled?: boolean;
+  endAdornment?: React.ReactNode;
 }
 
 export const TextField = ({
@@ -27,6 +28,7 @@ export const TextField = ({
   autoComplete,
   showPasswordToggle = false,
   disabled = false,
+  endAdornment,
 }: TextFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -45,30 +47,7 @@ export const TextField = ({
         placeholder={placeholder}
         disabled={disabled}
         {...register(name)}
-        endAdornment={
-          showPasswordToggle ? (
-            <InputAdornment position="end">
-              <IconButton
-                onClick={() => setShowPassword(!showPassword)}
-                edge="end"
-                sx={{
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                    '& svg': {
-                      color: 'primary.main',
-                    },
-                  },
-                  '& svg': {
-                    color: 'text.secondary',
-                    transition: 'color 0.2s',
-                  },
-                }}
-              >
-                {showPassword ? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
-              </IconButton>
-            </InputAdornment>
-          ) : null
-        }
+        endAdornment={endAdornment}
         sx={{
           mt: 1,
           '& .MuiInputBase-input': { 

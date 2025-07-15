@@ -6,7 +6,7 @@ import { CategoriesType, categoriesTypesArray, type Category } from '~/utils/int
 import CategoryModal from './components/CategoryModal';
 import CategoriesTable from './components/CategoriesTable';
 import CategoriesTableSkeleton from './components/CategoriesTableSkeleton';
-import Pagination from '~/components/Pagination';
+import Pagination from '~/components/shared/Pagination';
 import axiosInstance from '~/utils/api/axiosInstance';
 import { QUERY_KEYS } from '~/utils/constants/queryKeys';
 import { useParams, useNavigate } from 'react-router';

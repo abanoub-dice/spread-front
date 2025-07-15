@@ -13,7 +13,7 @@ const dicerUser: DicerUser = {
   type: UserType.DICER,
   created_at: '2025-04-14T14:12:34.000000Z',
   updated_at: '2025-04-24T13:11:29.000000Z',
-  role: UserRole.SOCIAL_MEDIA_SPECIALIST,
+  role: UserRole.ADMIN,
 };
 
 const clientUser: ClientUser = {

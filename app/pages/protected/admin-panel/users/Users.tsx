@@ -7,7 +7,7 @@ import UsersTable from './components/UsersTable';
 import UsersTableSkeleton from './components/UsersTableSkeleton';
 import UserModal from './components/UserModal';
 import AdminChangePasswordModal from './components/AdminChangePasswordModal';
-import Pagination from '~/components/Pagination';
+import Pagination from '~/components/shared/Pagination';
 import type { User, UsersResponse, UserFormData } from '../../../utils/interfaces/user';
 import axiosInstance from '~/utils/api/axiosInstance';
 import { useToaster } from '~/components/Toaster';
