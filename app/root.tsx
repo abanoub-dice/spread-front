@@ -25,6 +25,7 @@ import { hideLoader, showLoader } from './utils/store/slices/loaderSlice';
 import { ToasterProvider } from './components/Toaster';
 import { Loader } from './components/Loader';
 import Dialog from './components/Dialog';
+import { UserType } from './utils/interfaces/user';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -87,52 +88,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 // New component to handle authentication logic
 function AppContent() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { authenticated } = useAppSelector(state => state.user.data);
   const isLoading = useAppSelector(state => state.loader.isLoading);
-  const authChecked = useRef(false);
-
-  // Check if token exists
-  const hasToken = localStorage.getItem('token');
-
-  useEffect(() => {
-    const isPublicRoute = publicRoutesList.some(route => {
-      const pattern = route.replace(/:[^/]+/g, '*');
-      return matchPath(pattern, location.pathname);
-    });
-
-    // Handle public routes first - redirect immediately if token exists
-    // if (isPublicRoute) {
-    //   if (hasToken) {
-    //     dispatch(showLoader());
-    //     navigate('/', { replace: true });
-    //     dispatch(hideLoader());
-    //     return;
-    //   }
-    // }
-
-    // if (!isPublicRoute) {
-    //   if (!hasToken) {
-    //     navigate('/dicer/login', { replace: true });
-    //     return;
-    //   }
-
-    //   if (hasToken && !authenticated && !authChecked.current) {
-    //     authChecked.current = true;
-    //     dispatch(showLoader());
-    //     dispatch(checkAuth());
-    //     dispatch(hideLoader());
-    //     return;
-    //   }
-    // }
-  }, [dispatch, hasToken, authenticated, location.pathname, navigate]);
-
-  // Show loader only if we have a token and are checking auth
-  if (hasToken && !authenticated) {
-    return <Loader />;
-  }
 
   return (
     <>

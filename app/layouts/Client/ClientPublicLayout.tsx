@@ -1,6 +1,10 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Box, Container, Paper } from '@mui/material';
 import logo from '@/assets/spread-logo.svg';
+import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
+import { checkAuth } from '~/utils/store/slices/userSlice';
+import { UserType } from '~/utils/interfaces/user';
 
 const containerSx = {
   display: 'flex',
@@ -35,29 +39,37 @@ const publicRoutes = ['/client/login', '/client/forgot-password', '/client/reset
 export default function ClientPublicLayout() {
   const location = useLocation();
   const isPublicRoute = publicRoutes.includes(location.pathname);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { authenticated, user } = useAppSelector(state => state.user.data);
+  const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
 
-  // For public routes (login, forgot password, etc.), use the centered layout
-  if (isPublicRoute) {
-    return (
-      <Container component="main" maxWidth="xs">
-        <Box sx={containerSx}>
-          <Paper elevation={3} sx={paperSx}>
-            <Box component="figure" sx={logoBoxSx}>
-              <img src={logo} alt="Grid by Dice logo" />
-            </Box>
-            <Outlet />
-          </Paper>
-        </Box>
-      </Container>
-    );
-  }
+  useEffect(() => {
+    if (hasToken) {
+      if (!authenticated) {
+        dispatch(checkAuth());
+        return;
+      }
+      if (authenticated && user) {
+        if (user.role === UserType.CLIENT) {
+          navigate('/client', { replace: true });
+        } else {
+          navigate('/dicer', { replace: true });
+        }
+      }
+    }
+  }, [hasToken, authenticated, user, navigate, dispatch]);
 
-  // For protected routes, use the full layout (similar to ClientLayout)
   return (
-    <div className="flex h-screen bg-gray-100">
-      <main className="flex-1">
-        <Outlet />
-      </main>
-    </div>
+    <Container component="main" maxWidth="xs">
+      <Box sx={containerSx}>
+        <Paper elevation={3} sx={paperSx}>
+          <Box component="figure" sx={logoBoxSx}>
+            <img src={logo} alt="Grid by Dice logo" />
+          </Box>
+          <Outlet />
+        </Paper>
+      </Box>
+    </Container>
   );
-} 
+}

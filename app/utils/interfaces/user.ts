@@ -18,18 +18,6 @@ export interface User {
   updatedAt: string;
 }
 
-export interface AuthUser {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-  isEmailVerified: boolean;
-  resetPasswordToken: string | null;
-  resetPasswordExpires: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export interface LoginCredentials {
   email: string;
@@ -39,7 +27,7 @@ export interface LoginCredentials {
 
 export interface LoginResponse {
   access_token: string;
-  user: AuthUser;
+  user: AppUser;
 }
 
 export interface UsersResponse {
@@ -68,4 +56,32 @@ export interface UpdateUserData {
 export interface UserFormData extends Omit<CreateUserData, 'password'> {
   confirmPassword?: string;
   password?: string;
-} 
+}
+
+export enum UserType {
+  DICER = 'dicer',
+  CLIENT = 'client',
+}
+
+export interface DicerUser {
+  id: number;
+  name: string;
+  email: string;
+  role: UserType;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClientUser {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  account_id: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+  role: UserType;
+}
+
+export type AppUser = DicerUser | ClientUser; 

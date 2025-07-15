@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useAppSelector } from '~/utils/store/hooks/hooks';
+import { getUser } from '~/utils/store/slices/userSlice';
 import {
   AppBar,
   Toolbar,
@@ -30,6 +32,9 @@ const Navbar: React.FC<NavbarProps> = ({
   avatarUrl,
   onLogout,
 }) => {
+  // Log user state
+  const userState = useAppSelector(getUser);
+  console.log('Navbar user state:', userState);
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null);
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);

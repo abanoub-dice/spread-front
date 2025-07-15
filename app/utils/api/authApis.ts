@@ -1,4 +1,4 @@
-import type { LoginCredentials, LoginResponse, AuthUser } from '../interfaces/user';
+import type { LoginCredentials, LoginResponse, AppUser } from '../interfaces/user';
 import axiosInstance from './axiosInstance';
 
 // ------------------------------------------------------------------------------------------------ //
@@ -14,7 +14,7 @@ export const userLogin = async (data: LoginCredentials): Promise<LoginResponse> 
   return res.data;
 };
 
-export const getCurrentUser = async (): Promise<AuthUser> => {
+export const getCurrentUser = async (): Promise<AppUser> => {
   const res = await axiosInstance.get('/v1/auth/profile');
   return res.data;
 };

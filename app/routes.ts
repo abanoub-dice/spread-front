@@ -5,7 +5,7 @@ const routes = [
   route('client', 'layouts/Client/ClientLayout.tsx', [
     index('routes/client/protected/ClientHome.tsx'),
   ]),
-  
+
   // Dicer routes with DicerLayout
   route('dicer', 'layouts/Dicer/DicerLayout.tsx', [
     index('routes/dicer/protected/calendar/CalendarView.tsx'),
@@ -19,7 +19,7 @@ const routes = [
       route('team', 'routes/dicer/protected/admin/TeamMembers.tsx'),
     ]),
   ]),
-  
+
   // Public client routes
   route('client', 'layouts/Client/ClientPublicLayout.tsx', [
     route('login', 'routes/client/public/Login.tsx'),
@@ -46,11 +46,3 @@ export const publicRoutesList: string[] = [
   '/dicer/forgot-password',
   '/dicer/reset-password',
 ];
-
-// Route constants
-export const ADMIN_ROUTES = {
-  USERS: '/admin-panel/users',
-  PROJECT_CATEGORIES: '/admin-panel/categories/project',
-  PRODUCTION_ITEMS: '/admin-panel/categories/productionItem',
-  BASE: '/admin-panel',
-} as const;
