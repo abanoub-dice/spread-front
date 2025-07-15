@@ -25,7 +25,7 @@ export default function Layout() {
         dispatch(checkAuth());
         return;
       }
-      if (authenticated && user && user.role !== UserType.DICER) {
+      if (authenticated && user && user.type !== UserType.DICER) {
         navigate(`/client`, { replace: true });
       }
     } else {
@@ -39,7 +39,7 @@ export default function Layout() {
   return (
     <div className="h-screen w-full">
       <Navbar avatarUrl={undefined} onLogout={() => alert('Logout')} />
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 3, backgroundColor: '#f7f9fa' }}>
         <DashboardHeader onGenerateReport={handleGenerateReport} />
         <ProjectTabs />
         <main>

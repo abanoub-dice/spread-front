@@ -2,6 +2,9 @@ import { Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
+import { useAppSelector } from '~/utils/store/hooks/hooks';
+import { getUser } from '~/utils/store/slices/userSlice';
+import { UserRole, UserType } from '~/utils/interfaces/user';
 
 // Dicer navigation items
 const dicerNavItems = [
@@ -16,6 +19,7 @@ export default function DicerTabs() {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
+  const { user } = useAppSelector(getUser);
 
   // Memoize navigation handler
   const handleNavigate = useCallback(
@@ -24,6 +28,14 @@ export default function DicerTabs() {
     },
     [navigate]
   );
+
+  // Filter nav items based on user role
+  const filteredNavItems = dicerNavItems.filter(item => {
+    if (item.label === 'Admin Panel') {
+      return user && 'role' in user && user.role === UserRole.ADMIN;
+    }
+    return true;
+  });
 
   return (
     <Box
@@ -39,7 +51,7 @@ export default function DicerTabs() {
         my: 3,
       }}
     >
-      {dicerNavItems.map(({ label, path }, idx) => {
+      {filteredNavItems.map(({ label, path }, idx) => {
         const isActive =
           path === '/dicer'
             ? location.pathname === '/dicer' || location.pathname === '/dicer/'
@@ -55,7 +67,7 @@ export default function DicerTabs() {
               minWidth: 0,
               borderRadius: 0,
               borderRight:
-                idx !== dicerNavItems.length - 1
+                idx !== filteredNavItems.length - 1
                   ? `1px solid ${theme.palette.custom?.lightBorder || '#d7d7d7'}`
                   : 'none',
               color: isActive

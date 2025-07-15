@@ -110,7 +110,7 @@ export default function UserModal({ open, onClose, onSubmit, user, mode }: UserM
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.role,
+        role: user.type,
       });
     } else {
       reset({

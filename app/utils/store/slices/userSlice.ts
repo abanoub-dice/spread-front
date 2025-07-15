@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import type { AppUser, ClientUser, DicerUser } from '../../interfaces/user';
-import { UserType } from '../../interfaces/user';
+import { UserRole, UserType } from '../../interfaces/user';
 import { getCurrentUser } from '../../api/authApis';
 import { showLoader, hideLoader } from './loaderSlice';
 
@@ -10,9 +10,10 @@ const dicerUser: DicerUser = {
   id: 1,
   name: 'John Doe',
   email: 'john.doe@dicema.com',
-  role: UserType.DICER,
+  type: UserType.DICER,
   created_at: '2025-04-14T14:12:34.000000Z',
   updated_at: '2025-04-24T13:11:29.000000Z',
+  role: UserRole.SOCIAL_MEDIA_SPECIALIST,
 };
 
 const clientUser: ClientUser = {
@@ -24,7 +25,7 @@ const clientUser: ClientUser = {
   deleted_at: null,
   created_at: '2025-04-14T14:12:34.000000Z',
   updated_at: '2025-04-24T13:11:29.000000Z',
-  role: UserType.CLIENT,
+  type: UserType.CLIENT,
 };
 interface UserState {
   data: {
@@ -51,7 +52,7 @@ export const checkAuth = createAsyncThunk(
         return rejectWithValue('No token found');
       }
       // const user = await getCurrentUser();
-      const user = clientUser;
+      const user = dicerUser;
       dispatch(hideLoader());
       return user;
     } catch (error) {

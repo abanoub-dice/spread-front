@@ -18,7 +18,7 @@ export default function Layout() {
         dispatch(checkAuth());
         return;
       }
-      if (authenticated && user && user.role !== UserType.CLIENT) {
+      if (authenticated && user && user.type !== UserType.CLIENT) {
         navigate(`/dicer`, { replace: true });
       }
     } else {
@@ -30,7 +30,7 @@ export default function Layout() {
   if (!authenticated) return null;
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full bg-[#f7f9fa]">
       <Navbar avatarUrl="https://i.pravatar.cc/150?img=3" onLogout={() => alert('Logout')} />
       <Banner />
       <main>

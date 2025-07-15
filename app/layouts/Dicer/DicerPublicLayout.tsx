@@ -51,7 +51,7 @@ export default function DicerPublicLayout() {
         return;
       }
       if (authenticated && user) {
-        if (user.role === UserType.CLIENT) {
+        if (user.type === UserType.CLIENT) {
           navigate('/client', { replace: true });
         } else {
           navigate('/dicer', { replace: true });

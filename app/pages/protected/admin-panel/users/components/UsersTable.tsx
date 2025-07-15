@@ -87,8 +87,8 @@ export default function UsersTable({ users, onEdit, onDelete, onChangePassword, 
               </TableCell>
               <TableCell>
                 <StatusChip
-                  label={UserRoleLabel[user.role]}
-                  color={ROLE_COLORS[user.role]}
+                  label={UserRoleLabel[user.type]}
+                  color={ROLE_COLORS[user.type]}
                 />
               </TableCell>
               <TableCell align="right">

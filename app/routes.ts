@@ -15,9 +15,9 @@ const routes = [
     route('upload', 'routes/dicer/protected/UploadContent.tsx'),
     route('insights', 'routes/dicer/protected/insights/Insights.tsx'),
     route('admin', 'routes/dicer/protected/admin/AdminPanel.tsx', [
-      route('clients', 'routes/dicer/protected/admin/Clients.tsx'),
-      route('accounts', 'routes/dicer/protected/admin/Accounts.tsx'),
-      route('team', 'routes/dicer/protected/admin/TeamMembers.tsx'),
+      route('clients', 'routes/dicer/protected/admin/clients/Clients.tsx'),
+      route('accounts', 'routes/dicer/protected/admin/accounts/Accounts.tsx'),
+      route('team', 'routes/dicer/protected/admin/team-members/TeamMembers.tsx'),
     ]),
   ]),
 

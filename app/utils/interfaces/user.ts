@@ -1,5 +1,3 @@
-import { UserRole } from './role';
-
 export interface UserSummery {
   id: number;
   email: string;
@@ -63,13 +61,19 @@ export enum UserType {
   CLIENT = 'client',
 }
 
+export enum UserRole {
+  ADMIN = 'admin',
+  ACCOUNT_MANAGER = 'Account Manager',
+  SOCIAL_MEDIA_SPECIALIST = 'Social media specialist'
+} 
 export interface DicerUser {
   id: number;
   name: string;
   email: string;
-  role: UserType;
+  type: UserType;
   created_at: string;
   updated_at: string;
+  role: UserRole;
 }
 
 export interface ClientUser {
@@ -81,7 +85,7 @@ export interface ClientUser {
   deleted_at: string | null;
   created_at: string;
   updated_at: string;
-  role: UserType;
+  type: UserType;
 }
 
 export type AppUser = DicerUser | ClientUser; 
