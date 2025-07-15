@@ -1,6 +1,7 @@
 import { type RouteConfig, index, route } from '@react-router/dev/routes';
 
 const routes = [
+  route('', 'routes/Home.tsx'),
   // Client routes with ClientLayout
   route('client', 'layouts/Client/ClientLayout.tsx', [
     index('routes/client/protected/ClientHome.tsx'),
@@ -33,6 +34,9 @@ const routes = [
     route('forgot-password', 'routes/dicer/public/ForgotPassword.tsx'),
     route('reset-password', 'routes/dicer/public/ResetPassword.tsx'),
   ]),
+
+  // 404 catch-all route
+  route('*', 'components/NotFound.tsx'),
 ] satisfies RouteConfig;
 
 export default routes;

@@ -25,7 +25,7 @@ export default function Layout() {
         dispatch(checkAuth());
         return;
       }
-      if (authenticated && user && user.role === UserType.DICER) {
+      if (authenticated && user && user.role !== UserType.DICER) {
         navigate(`/client`, { replace: true });
       }
     } else {
