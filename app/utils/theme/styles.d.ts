@@ -1,9 +1,9 @@
-import "@mui/material/styles";
-import "@mui/material/styles/createPalette";
-import { CustomColors } from "./types";
-import "@mui/material/Typography";
+import '@mui/material/styles';
+import '@mui/material/styles/createPalette';
+import { CustomColors } from './types';
+import '@mui/material/Typography';
 
-declare module "@mui/material/styles" {
+declare module '@mui/material/styles' {
   interface Palette {
     custom: CustomColors;
     border: {
@@ -12,10 +12,6 @@ declare module "@mui/material/styles" {
       light?: string;
       dark?: string;
     };
-  }
-
-  interface PaletteOptions {
-    custom: CustomColors;
   }
 
   interface TypographyVariants {
@@ -36,30 +32,46 @@ declare module "@mui/material/styles" {
   }
 
   interface TypeBackground {
-    dark: string;
-    darkPaper: string;
-    activePrimary: string;
-    overlay: string;
-    darkGray: string;
+    default: string;
+    defaultSecondary: string;
+    defaultTertiary: string;
+    brand: string;
+    brandSecondary: string;
+    brandTertiary: string;
+    disabled: string;
   }
 
   interface TypeText {
-    lightText: string;
-    black: string;
+    light: string;
+    dark: string;
+    gray: string;
+    brand: string;
+  }
+
+  interface TypeSemantic {
+    success: string;
+    successBg: string;
+    warning: string;
+    warningBg: string;
+    error: string;
+    errorBg: string;
+    info: string;
+    infoBg: string;
+    disabled: string;
   }
 }
 
-declare module "@mui/material/styles/createPalette" {
-  interface TypeBackground {
-    dark?: string;
-    darkPaper?: string;
-    activePrimary?: string;
-    overlay?: string;
-    darkGray: string;
-  }
+interface TypeSemantic {
+  default: string;
+  defaultSecondary: string;
+  defaultTertiary: string;
+  brand: string;
+  brandSecondary: string;
+  brandTertiary: string;
+  disabled: string;
 }
 
-declare module "@mui/material/Typography" {
+declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     paragraph1: true;
     paragraph2: true;

@@ -1,42 +1,48 @@
-import type { PaletteColorOptions, PaletteOptions, TypeBackground, TypeText } from '@mui/material';
-export interface CustomColors {
-  stroke: string;
-  darkContrastText: string;
-  lightBorder: string;
-}
+import type { PaletteColorOptions, PaletteOptions, TypeBackground, TypeSemantic, TypeText } from '@mui/material';
 
-export const primaryColor: PaletteColorOptions = {
-  main: '#fe520a',
+export const primary: PaletteColorOptions = {
+  main: '#FE6A00',
 };
 
-export const secondaryColor: PaletteColorOptions = {
+export const secondary: PaletteColorOptions = {
   main: '#535863',
 };
 
 export const backgroundColor: Partial<TypeBackground> = {
   default: '#fff',
-  paper: '#FAFAFA',
-  dark: '#000',
-};
-
-export const customColors: Partial<CustomColors> = {
-  stroke: '#000',
-  lightBorder: '#d7d7d7',
+  defaultSecondary: '#F7F1ED',
+  defaultTertiary: '#D8D1CD',
+  disabled: '#A19B97',
+  brand: '#FE6A00',
+  brandSecondary: '#FFA268',
+  brandTertiary: '#FFD6BB',
 };
 
 export const text: Partial<TypeText> = {
-  primary: '#3F3F46',
-  secondary: '#535863',
-  lightText: '#4b5563',
-  black: '#000',
+  dark: '#272220',
+  light: '#4b5563',
+  gray: '#D8D1CD',
+  brand: '#CB560A',
+};
+
+export const semantic: Partial<TypeSemantic> = {
+  success: '#21BD53',
+  successBg: '#E7FDEF',
+  warning: '#D47C30',
+  warningBg: '#FFF1E5',
+  error: '#ED3838',
+  errorBg: '#FDE8E8',
+  info: '#21A2F2',
+  infoBg: '#E7F5FE',
+  disabled: '#A19B97',
 };
 
 const paletteOptions: PaletteOptions = {
-  primary: primaryColor,
-  secondary: secondaryColor,
+  primary,
+  secondary,
   background: backgroundColor,
-  custom: customColors,
   text,
+  semantic,
 };
 
 export default paletteOptions;
