@@ -1,175 +1,187 @@
 import type { TypographyVariantsOptions } from '@mui/material/styles';
 import type { TypographyPropsVariantOverrides } from '@mui/material/Typography';
 
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    paragraph1: React.CSSProperties;
+    bodyLarge: React.CSSProperties;
+    bodyRegular: React.CSSProperties;
+    bodySmall: React.CSSProperties;
+  }
+
+  interface TypographyVariantsOptions {
+    paragraph1?: React.CSSProperties;
+    bodyLarge?: React.CSSProperties;
+    bodyRegular?: React.CSSProperties;
+    bodySmall?: React.CSSProperties;
+    caption?: React.CSSProperties;
+    footnote?: React.CSSProperties;
+  }
+}
+
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    formHeader: true;
     paragraph1: true;
+    bodyLarge: true;
+    bodyRegular: true;
+    bodySmall: true;
+    caption: true;
+    footnote: true;
   }
 }
 
 // Define each variant as a constant
 export const h1 = {
-  fontSize: '20px',
-  lineHeight: '28px',
-  fontWeight: 700,
+  fontSize: '64px',
+  lineHeight: '120%',
+  fontWeight: 300, // Light weight
   fontStyle: 'normal',
+  letterSpacing: '0%',
   '@media (max-width:1024px)': {
-    fontSize: '18px',
-    lineHeight: '26px',
+    fontSize: '62px',
   },
   '@media (max-width:687px)': {
-    fontSize: '17px',
-    lineHeight: '24px',
+    fontSize: '60px',
   },
 };
 
 export const h2 = {
-  fontSize: '24px',
+  fontSize: '48px',
+  lineHeight: '120%',
+  fontWeight: 300, // Light weight
   fontStyle: 'normal',
-  fontWeight: 500,
-  lineHeight: '28px',
+  letterSpacing: '0%',
   '@media (max-width:1024px)': {
-    fontSize: '23px',
-    lineHeight: '26px',
+    fontSize: '46px',
   },
   '@media (max-width:687px)': {
-    fontSize: '22px',
-    lineHeight: '24px',
+    fontSize: '44px',
   },
 };
 
 export const h3 = {
-  fontSize: '18px',
+  fontSize: '40px',
+  lineHeight: '120%',
+  fontWeight: 300, // Light weight
   fontStyle: 'normal',
-  fontWeight: 600,
-  lineHeight: 'normal',
+  letterSpacing: '0%',
   '@media (max-width:1024px)': {
-    fontSize: '17px',
+    fontSize: '38px',
+  },
+  '@media (max-width:687px)': {
+    fontSize: '36px',
+  },
+};
+
+export const h4 = {
+  fontSize: '32px',
+  lineHeight: '120%',
+  fontWeight: 300, // Light weight
+  fontStyle: 'normal',
+  letterSpacing: '0%',
+  '@media (max-width:1024px)': {
+    fontSize: '30px',
+  },
+  '@media (max-width:687px)': {
+    fontSize: '28px',
+  },
+};
+
+export const h5 = {
+  fontSize: '24px',
+  lineHeight: '120%',
+  fontWeight: 300, // Light weight
+  fontStyle: 'normal',
+  letterSpacing: '0%',
+  '@media (max-width:1024px)': {
+    fontSize: '22px',
+  },
+  '@media (max-width:687px)': {
+    fontSize: '20px',
+  },
+};
+
+export const h6 = {
+  fontSize: '20px',
+  lineHeight: '120%',
+  fontWeight: 300, // Light weight
+  fontStyle: 'normal',
+  letterSpacing: '0%',
+  '@media (max-width:1024px)': {
+    fontSize: '18px',
   },
   '@media (max-width:687px)': {
     fontSize: '16px',
   },
 };
 
-export const body1 = {
-  fontSize: '15px',
+export const bodyLarge = {
+  fontSize: '18px',
+  lineHeight: '140%',
+  fontWeight: 400, // Regular weight
   fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: '16px',
+  letterSpacing: '0%',
   '@media (max-width:1024px)': {
-    fontSize: '14px',
-    lineHeight: '15px',
+    fontSize: '16px',
   },
   '@media (max-width:687px)': {
-    fontSize: '13px',
-    lineHeight: '14px',
+    fontSize: '14px',
+  },
+};
+
+export const bodyRegular = {
+  fontSize: '16px',
+  lineHeight: '140%',
+  fontWeight: 400, // Regular weight
+  fontStyle: 'normal',
+  letterSpacing: '0%',
+  '@media (max-width:1024px)': {
+    fontSize: '14px',
+  },
+  '@media (max-width:687px)': {
+    fontSize: '12px',
+  },
+};
+
+export const bodySmall = {
+  fontSize: '14px',
+  lineHeight: '140%',
+  fontWeight: 400, // Regular weight
+  fontStyle: 'normal',
+  letterSpacing: '0%',
+  '@media (max-width:1024px)': {
+    fontSize: '12px',
+  },
+  '@media (max-width:687px)': {
+    fontSize: '10px',
   },
 };
 
 export const caption = {
-  fontSize: '13px',
+  fontSize: '12px',
+  lineHeight: '140%',
+  fontWeight: 600, // SemiBold weight
   fontStyle: 'normal',
-  fontWeight: 700,
-  lineHeight: '16px',
+  letterSpacing: '4%',
   '@media (max-width:1024px)': {
-    fontSize: '12px',
-    lineHeight: '14px',
+    fontSize: '10px',
   },
   '@media (max-width:687px)': {
-    fontSize: '11px',
-    lineHeight: '12px',
+    fontSize: '8px',
   },
 };
 
-
-// NOT IN USE YET
-
-export const h4 = {
-  fontSize: '28px',
+export const footnote = {
+  fontSize: '10px',
+  lineHeight: '140%',
+  fontWeight: 400, // Regular weight
   fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: 'normal',
+  letterSpacing: '0%',
   '@media (max-width:1024px)': {
-    fontSize: '26px',
+    fontSize: '8px',
   },
   '@media (max-width:687px)': {
-    fontSize: '25px',
-  },
-};
-
-export const h5 = {
-  fontSize: '1.062rem',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  lineHeight: 'normal',
-  '@media (max-width:1024px)': {
-    fontSize: '1rem',
-  },
-  '@media (max-width:687px)': {
-    fontSize: '0.9375rem',
-  },
-};
-
-export const textField = {
-  fontSize: '0.875rem',
-  fontStyle: 'normal',
-  fontWeight: 300,
-  lineHeight: '1.25',
-  '@media (max-width:1024px)': {
-    fontSize: '0.8125rem',
-  },
-  '@media (max-width:687px)': {
-    fontSize: '0.75rem',
-  },
-};
-
-export const button = {
-  fontSize: '14px',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  lineHeight: '20px',
-  '@media (max-width:1024px)': {
-    fontSize: '12px',
-    lineHeight: '18px',
-  },
-  '@media (max-width:687px)': {
-    fontSize: '11px',
-    lineHeight: '16px',
-  },
-};
-
-export const subHeader = {
-  fontSize: '14px',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  lineHeight: '20px',
-  '@media (max-width:1024px)': {
-    fontSize: '12px',
-    lineHeight: '18px',
-  },
-  '@media (max-width:687px)': {
-    fontSize: '11px',
-    lineHeight: '16px',
-  },
-};
-
-
-
-
-export const formHeader = {
-  fontSize: '24px',
-  fontStyle: 'normal',
-  fontWeight: 900,
-  lineHeight: '32px',
-  color: 'primary.main',
-  '@media (max-width:1024px)': {
-    fontSize: '22px',
-    lineHeight: '30px',
-  },
-  '@media (max-width:687px)': {
-    fontSize: '21px',
-    lineHeight: '28px',
+    fontSize: '6px',
   },
 };
 
@@ -180,10 +192,10 @@ export const typographyVariants: TypographyVariantsOptions = {
   h3,
   h4,
   h5,
-  textField,
+  h6,
+  bodyLarge,
+  bodyRegular,
+  bodySmall,
   caption,
-  subHeader,
-  button,
-  formHeader,
-  body1
+  footnote,
 };
