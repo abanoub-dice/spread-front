@@ -2,7 +2,10 @@ import React from 'react';
 import type { Status, Platform, Type } from '~/pages/protected/calendar-page/CalendarPage';
 import type { Dayjs } from 'dayjs';
 import { Box, Typography, Button, Grid } from '@mui/material';
-import ClientPostCard, { type Post, type ClientWithActions } from '../ClientPostCard/ClientPostCard';
+import ClientPostCard, {
+  type Post,
+  type ClientWithActions,
+} from '../ClientPostCard/ClientPostCard';
 
 interface PostsListProps {
   status: Status;
@@ -271,7 +274,7 @@ const PostsList: React.FC<PostsListProps> = ({ status, platform, type, selectedD
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="h2" sx={{ fontWeight: 700, color: 'text.primary' }}>
+        <Typography variant="bodyLarge" sx={{ fontWeight: 700, color: 'text.primary' }}>
           {selectedDate ? selectedDate.format('dddd, MMMM D, YYYY') : 'No Date Selected'}
         </Typography>
         <Button

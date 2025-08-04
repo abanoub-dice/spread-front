@@ -1,5 +1,4 @@
 import type { TypographyVariantsOptions } from '@mui/material/styles';
-import type { TypographyPropsVariantOverrides } from '@mui/material/Typography';
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {

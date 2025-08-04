@@ -1,6 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Box, Container, Paper } from '@mui/material';
+import { Box } from '@mui/material';
 import logo from '@/assets/spread-logo.svg';
+import banner from '@/assets/auth/login_banner.png';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
 import { checkAuth } from '~/utils/store/slices/userSlice';
@@ -8,18 +9,29 @@ import { UserType } from '~/utils/interfaces/user';
 
 const containerSx = {
   display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
   height: '100svh',
+  width: '100%',
 };
 
-const paperSx = {
-  p: 4,
+const contentSx = {
+  flex: 1,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  width: '100%',
+  justifyContent: 'center',
+  p: 4,
+};
+
+const imageSx = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#f5f5f5',
+  '& img': {
+    height: '100%',
+    width: 'auto',
+    objectFit: 'cover',
+  },
 };
 
 const logoBoxSx = {
@@ -33,12 +45,7 @@ const logoBoxSx = {
   },
 };
 
-// Public routes that should use the centered layout
-const publicRoutes = ['/dicer/login', '/dicer/forgot-password', '/dicer/reset-password'];
-
 export default function DicerPublicLayout() {
-  const location = useLocation();
-  const isPublicRoute = publicRoutes.includes(location.pathname);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { authenticated, user } = useAppSelector(state => state.user.data);
@@ -61,15 +68,16 @@ export default function DicerPublicLayout() {
   }, [hasToken, authenticated, user, navigate, dispatch]);
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box sx={containerSx}>
-        <Paper elevation={3} sx={paperSx}>
-          <Box component="figure" sx={logoBoxSx}>
-            <img src={logo} alt="Grid by Dice logo" />
-          </Box>
-          <Outlet />
-        </Paper>
+    <Box sx={containerSx}>
+      <Box sx={contentSx}>
+        <Box component="figure" sx={logoBoxSx}>
+          <img src={logo} alt="Grid by Dice logo" />
+        </Box>
+        <Outlet />
       </Box>
-    </Container>
+      <Box sx={imageSx}>
+        <img src={banner} alt="Grid by Dice" />
+      </Box>
+    </Box>
   );
 }

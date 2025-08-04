@@ -70,17 +70,3 @@ interface TypeSemantic {
   brandTertiary: string;
   disabled: string;
 }
-
-declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    paragraph1: true;
-    paragraph2: true;
-    button1: true;
-    button2: true;
-    thumbnailTitle: true;
-    thumbnailSubtitle1: true;
-    thumbnailSubtitle2: true;
-    sCaption: true;
-    subHeader: true;
-  }
-}

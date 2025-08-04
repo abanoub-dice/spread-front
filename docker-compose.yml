@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: operation-project-tracker-frontend
+    container_name: spread-frontend
     ports:
       - "3003:3000"
     environment:
