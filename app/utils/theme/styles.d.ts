@@ -39,6 +39,7 @@ declare module '@mui/material/styles' {
     brandSecondary: string;
     brandTertiary: string;
     disabled: string;
+    darkBlue: string;
   }
 
   interface TypeText {
@@ -46,6 +47,7 @@ declare module '@mui/material/styles' {
     dark: string;
     gray: string;
     brand: string;
+    white: string;
   }
 
   interface TypeSemantic {

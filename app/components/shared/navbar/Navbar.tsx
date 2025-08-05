@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '~/utils/store/hooks/hooks';
@@ -28,13 +28,9 @@ interface NavbarProps {
   onLogout: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  avatarUrl,
-  onLogout,
-}) => {
+const Navbar: React.FC<NavbarProps> = ({ avatarUrl, onLogout }) => {
   // Log user state
   const userState = useAppSelector(getUser);
-  console.log('Navbar user state:', userState);
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null);
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
@@ -70,17 +66,19 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   const handleLogout = () => {
-    dispatch(setDialogue({
-      show: true,
-      title: 'Confirm Logout',
-      text: 'Are you sure you want to logout?',
-      acceptLabel: 'Logout',
-      acceptColor: 'error',
-      closable: true,
-      onAccept: () => {
-        onLogout();
-      },
-    }));
+    dispatch(
+      setDialogue({
+        show: true,
+        title: 'Confirm Logout',
+        text: 'Are you sure you want to logout?',
+        acceptLabel: 'Logout',
+        acceptColor: 'error',
+        closable: true,
+        onAccept: () => {
+          onLogout();
+        },
+      })
+    );
     handleClose();
   };
 
@@ -89,24 +87,25 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <AppBar 
-      position="static" 
+    <AppBar
+      position="static"
       elevation={1}
-      sx={{ 
-        backgroundColor: '#fff',
-        color: '#333',
-        height: 80,
+      sx={{
+        backgroundColor: 'background.darkBlue',
       }}
     >
-      <Container 
-        maxWidth={false} 
-        sx={{ 
-          width: '90%',
-          height: '100%',
-        }}
+      <Container
+        maxWidth={false}
+        disableGutters
+        sx={theme => ({
+          [theme.breakpoints.up('sm')]: {
+            paddingLeft: theme.spacing(2.5),
+            paddingRight: theme.spacing(2.5),
+          },
+        })}
       >
-        <Toolbar 
-          sx={{ 
+        <Toolbar
+          sx={{
             height: '100%',
             padding: '0 !important',
             justifyContent: 'space-between',
@@ -114,13 +113,12 @@ const Navbar: React.FC<NavbarProps> = ({
         >
           {/* Logo Section */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <img 
-              src={SpreadLogo} 
-              alt="Spread Logo" 
-              style={{ 
-                height: 50, 
+            <img
+              src={SpreadLogo}
+              alt="Spread Logo"
+              style={{
                 cursor: 'pointer',
-              }} 
+              }}
               onClick={handleLogoClick}
             />
           </Box>
@@ -130,12 +128,13 @@ const Navbar: React.FC<NavbarProps> = ({
             {/* Notification Icon */}
             <IconButton
               onClick={handleNotificationClick}
-              sx={{ 
-                color: notificationAnchorEl ? '#fe520a' : '#333',
+              sx={{
+                padding: '0',
+                color: notificationAnchorEl ? 'primary.main' : 'primary.white',
                 backgroundColor: notificationAnchorEl ? 'rgba(254, 82, 10, 0.08)' : 'transparent',
                 '&:hover': {
-                  backgroundColor: notificationAnchorEl 
-                    ? 'rgba(254, 82, 10, 0.12)' 
+                  backgroundColor: notificationAnchorEl
+                    ? 'rgba(254, 82, 10, 0.12)'
                     : 'rgba(0, 0, 0, 0.04)',
                 },
                 transition: 'all 0.2s ease-in-out',
@@ -153,41 +152,39 @@ const Navbar: React.FC<NavbarProps> = ({
             {/* User Avatar */}
             <IconButton
               onClick={handleUserClick}
-              sx={{ 
-                color: userAnchorEl ? '#fe520a' : '#333',
+              sx={{
+                padding: '0',
+                color: userAnchorEl ? 'primary.main' : 'primary.white',
                 backgroundColor: userAnchorEl ? 'rgba(254, 82, 10, 0.08)' : 'transparent',
                 '&:hover': {
-                  backgroundColor: userAnchorEl 
-                    ? 'rgba(254, 82, 10, 0.12)' 
-                    : 'rgba(0, 0, 0, 0.04)',
+                  backgroundColor: userAnchorEl ? 'rgba(254, 82, 10, 0.12)' : 'rgba(0, 0, 0, 0.04)',
                 },
                 transition: 'all 0.2s ease-in-out',
               }}
             >
               {avatarUrl ? (
-                <Avatar 
-                  src={avatarUrl} 
+                <Avatar
+                  src={avatarUrl}
                   alt="User avatar"
-                  sx={{ 
-                    width: 40, 
-                    height: 40,
-                    border: userAnchorEl ? '2px solid #fe520a' : 'none',
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    border: userAnchorEl ? '2px solid' : 'none',
+                    borderColor: userAnchorEl ? 'primary.main' : 'transparent',
                   }}
                 />
               ) : (
-                <Box sx={{ 
-                  width: 40, 
-                  height: 40,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: userAnchorEl ? '#fe520a' : '#333',
-                }}>
-                  {userAnchorEl ? (
-                    <IoSettings size={24} />
-                  ) : (
-                    <IoSettingsOutline size={24} />
-                  )}
+                <Box
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: userAnchorEl ? 'primary.main' : 'primary.white',
+                  }}
+                >
+                  {userAnchorEl ? <IoSettings size={24} /> : <IoSettingsOutline size={24} />}
                 </Box>
               )}
             </IconButton>
@@ -208,11 +205,13 @@ const Navbar: React.FC<NavbarProps> = ({
           vertical: 'top',
           horizontal: 'right',
         }}
-        PaperProps={{
-          sx: {
-            minWidth: 300,
-            minHeight: 200,
-            mt: 1,
+        slotProps={{
+          paper: {
+            sx: {
+              minWidth: 300,
+              minHeight: 200,
+              mt: 1,
+            },
           },
         }}
       >
@@ -239,24 +238,18 @@ const Navbar: React.FC<NavbarProps> = ({
           vertical: 'top',
           horizontal: 'right',
         }}
-        PaperProps={{
-          sx: {
-            mt: 1,
-            minWidth: 150,
+        slotProps={{
+          paper: {
+            sx: {
+              mt: 1,
+              minWidth: 150,
+            },
           },
         }}
       >
-        <MenuItem 
-          onClick={handleChangePassword}
-        >
-          Change Password
-        </MenuItem>
+        <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
         <Divider />
-        <MenuItem 
-          onClick={handleLogout}
-        >
-          Logout
-        </MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
 
       {/* Change Password Modal */}

@@ -2,6 +2,7 @@ import type { PaletteColorOptions, PaletteOptions, TypeBackground, TypeSemantic,
 
 export const primary: PaletteColorOptions = {
   main: '#FE6A00',
+  white: '#fff',
 };
 
 export const secondary: PaletteColorOptions = {
@@ -16,6 +17,7 @@ export const backgroundColor: Partial<TypeBackground> = {
   brand: '#FE6A00',
   brandSecondary: '#FFA268',
   brandTertiary: '#FFD6BB',
+  darkBlue: '#000032',
 };
 
 export const text: Partial<TypeText> = {
@@ -23,6 +25,7 @@ export const text: Partial<TypeText> = {
   light: '#4b5563',
   gray: '#D8D1CD',
   brand: '#CB560A',
+  white: '#fff',
 };
 
 export const semantic: Partial<TypeSemantic> = {
