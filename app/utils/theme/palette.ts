@@ -1,4 +1,5 @@
 import type { PaletteColorOptions, PaletteOptions, TypeBackground, TypeSemantic, TypeText } from '@mui/material';
+import type { BorderColors } from './types';
 
 export const primary: PaletteColorOptions = {
   main: '#FE6A00',
@@ -11,8 +12,8 @@ export const secondary: PaletteColorOptions = {
 
 export const backgroundColor: Partial<TypeBackground> = {
   default: '#fff',
-  defaultSecondary: '#F7F1ED',
-  defaultTertiary: '#D8D1CD',
+  defaultSecondary: '#F1F1F4',
+  defaultTertiary: '#BCBCC5',
   disabled: '#A19B97',
   brand: '#FE6A00',
   brandSecondary: '#FFA268',
@@ -28,6 +29,33 @@ export const text: Partial<TypeText> = {
   white: '#fff',
 };
 
+export const border: BorderColors = {
+  // Existing border properties
+  primary: '#000000',
+  secondary: '#535863',
+  light: '#D8D1CD',
+  dark: '#272220',
+  
+  // Neutral borders
+  neutral: '#000000',
+  neutralSecondary: '#535863',
+  neutralInverse: '#FFFFFF',
+  
+  // Brand borders
+  brand: '#FE6A00',
+  brandInverse: '#FFFFFF',
+  
+  // Semantic borders
+  success: '#21BD53',
+  successInverse: '#FFFFFF',
+  warning: '#D47C30',
+  warningInverse: '#FFFFFF',
+  error: '#ED3838',
+  errorInverse: '#FFFFFF',
+  info: '#21A2F2',
+  infoInverse: '#FFFFFF',
+};
+
 export const semantic: Partial<TypeSemantic> = {
   success: '#21BD53',
   successBg: '#E7FDEF',
@@ -40,12 +68,13 @@ export const semantic: Partial<TypeSemantic> = {
   disabled: '#A19B97',
 };
 
-const paletteOptions: PaletteOptions = {
+const paletteOptions = {
   primary,
   secondary,
   background: backgroundColor,
   text,
+  border,
   semantic,
-};
+} as PaletteOptions & { border: BorderColors };
 
 export default paletteOptions;

@@ -11,6 +11,22 @@ declare module '@mui/material/styles' {
       secondary?: string;
       light?: string;
       dark?: string;
+      // Neutral borders
+      neutral: string;
+      neutralSecondary: string;
+      neutralInverse: string;
+      // Brand borders
+      brand: string;
+      brandInverse: string;
+      // Semantic borders
+      success: string;
+      successInverse: string;
+      warning: string;
+      warningInverse: string;
+      error: string;
+      errorInverse: string;
+      info: string;
+      infoInverse: string;
     };
   }
 
@@ -63,12 +79,29 @@ declare module '@mui/material/styles' {
   }
 }
 
-interface TypeSemantic {
-  default: string;
-  defaultSecondary: string;
-  defaultTertiary: string;
-  brand: string;
-  brandSecondary: string;
-  brandTertiary: string;
-  disabled: string;
+declare module '@mui/material/styles/createPalette' {
+  interface PaletteOptions {
+    border?: {
+      primary: string;
+      secondary?: string;
+      light?: string;
+      dark?: string;
+      // Neutral borders
+      neutral: string;
+      neutralSecondary: string;
+      neutralInverse: string;
+      // Brand borders
+      brand: string;
+      brandInverse: string;
+      // Semantic borders
+      success: string;
+      successInverse: string;
+      warning: string;
+      warningInverse: string;
+      error: string;
+      errorInverse: string;
+      info: string;
+      infoInverse: string;
+    };
+  }
 }

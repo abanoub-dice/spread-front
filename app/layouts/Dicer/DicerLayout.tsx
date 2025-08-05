@@ -1,18 +1,22 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/shared/navbar/Navbar';
-import DashboardHeader from '../../components/dicer/dashboard-header/DashboardHeader';
+import AccountSelector from '../../components/dicer/dashboard-header/AccountSelector';
 import DicerNavigation from '../../components/dicer/tabs/DicerNavigation';
 import { Box } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
 import { checkAuth } from '~/utils/store/slices/userSlice';
 import { UserType } from '~/utils/interfaces/user';
 
+interface Account {
+  id: string;
+  name: string;
+  icon?: string;
+  color?: string;
+}
+
 export default function Layout() {
-  const handleGenerateReport = (accountId: string, selectedMonth: any) => {
-    console.log('Generating report for:', accountId, 'Month:', selectedMonth.format('MMMM YYYY'));
-    // Implement your report generation logic here
-  };
+  const [selectedAccount, setSelectedAccount] = useState<Account | undefined>();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -34,33 +38,50 @@ export default function Layout() {
     }
   }, [hasToken, authenticated, user, navigate, dispatch]);
 
+  const handleAccountSelect = (account: Account) => {
+    setSelectedAccount(account);
+    console.log('Selected account:', account);
+    // You can add additional logic here like updating global state, API calls, etc.
+  };
+
   if (!authenticated) return null;
 
   return (
     <div className="h-screen w-full">
       <Navbar avatarUrl={undefined} onLogout={() => alert('Logout')} />
-      <Box sx={{ 
-        display: 'flex', 
-        height: 'calc(100vh - 64px)', // Subtract navbar height
-        backgroundColor: '#f7f9fa' 
-      }}>
+      <Box
+        sx={{
+          display: 'flex',
+          height: 'calc(100vh - 64px)', // Subtract navbar height
+        }}
+      >
         {/* Sidebar */}
-        <Box sx={{ 
-          width: '20%', 
-          backgroundColor: 'white',
-          borderRight: '1px solid #e0e0e0',
-          p: 2
-        }}>
+        <Box
+          sx={{
+            width: '20%',
+            borderRight: '1px solid #e0e0e0',
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            backgroundColor: 'background.defaultSecondary',
+          }}
+        >
+          <AccountSelector
+            onAccountSelect={handleAccountSelect}
+            selectedAccountId={selectedAccount?.id}
+          />
           <DicerNavigation />
         </Box>
-        
+
         {/* Main Content */}
-        <Box sx={{ 
-          flex: 1, 
-          p: 3,
-          overflow: 'auto'
-        }}>
-          {/* <DashboardHeader onGenerateReport={handleGenerateReport} /> */}
+        <Box
+          sx={{
+            flex: 1,
+            p: 3,
+            overflow: 'auto',
+          }}
+        >
           <main>
             <Outlet />
           </main>

@@ -19,7 +19,6 @@ interface TextFieldProps {
   type?: 'text' | 'email' | 'password' | 'number';
   error?: string;
   register: UseFormRegister<any>;
-  isRequired?: boolean;
   autoComplete?: string;
   showPasswordToggle?: boolean;
   disabled?: boolean;
@@ -33,7 +32,6 @@ export const TextField = ({
   type = 'text',
   error,
   register,
-  isRequired = false,
   autoComplete,
   showPasswordToggle = false,
   disabled = false,
@@ -87,8 +85,8 @@ export const TextField = ({
           endAdornment={endAdornment || passwordToggle}
           error={!!error}
           sx={{
-            backgroundColor: '#f5f5f5',
-            borderRadius: '10px',
+            backgroundColor: 'background.defaultSecondary',
+            borderRadius: '8px',
             '& .MuiInputBase-input': {
               fontSize: { xs: '0.875rem', sm: '0.875rem', md: '0.875rem' },
               padding: '12px 16px',
@@ -100,7 +98,7 @@ export const TextField = ({
               },
             },
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#e0e0e0',
+              borderColor: 'border.neutralSecondary',
               borderWidth: '1px',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
