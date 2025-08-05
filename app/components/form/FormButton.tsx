@@ -7,7 +7,7 @@ const useLoadingDots = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDots((prev) => {
+      setDots(prev => {
         if (prev.length >= 3) return '';
         return prev + '.';
       });
@@ -56,13 +56,20 @@ export const FormButton = ({
         padding: '16px 24px',
         boxShadow: 'none',
         '&:hover': {
-          boxShadow: '0 2px 8px rgba(254, 106, 0, 0.3)',
+          boxShadow: '5px 7px 8px rgba(254, 106, 0, 0.3)',
+          backgroundColor: 'primary.main',
         },
         color: 'white',
         ...sx,
       }}
     >
-      {isLoading ? `Loading${dots}` : <Typography variant="h4">{label}</Typography>}
+      {isLoading ? (
+        `Loading${dots}`
+      ) : (
+        <Typography variant="h4" sx={{ fontWeight: 400 }}>
+          {label}
+        </Typography>
+      )}
     </Button>
   );
-}; 
+};

@@ -106,7 +106,7 @@ export default function ForgotPassword() {
         />
 
         <Box sx={{ textAlign: 'left' }}>
-          <Typography variant="bodyRegular">
+          <Typography variant="bodyRegular" component="span">
             Back to{'  '}
             <Box
               component="span"
@@ -119,12 +119,12 @@ export default function ForgotPassword() {
               }}
               onClick={() => navigate(`/${userType}/login`)}
             >
-              login?
+              Login?
             </Box>
           </Typography>
         </Box>
         <FormButton
-          label="Send Reset Link"
+          label="Confirm Email"
           isLoading={resetLinkMutation.isPending}
           sx={{ mt: 2 }}
         />
