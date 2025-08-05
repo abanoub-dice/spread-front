@@ -14,6 +14,7 @@ const routes = [
     route('content/:id', 'routes/dicer/protected/PostView.tsx'),
     route('upload', 'routes/dicer/protected/UploadContent.tsx'),
     route('insights', 'routes/dicer/protected/insights/Insights.tsx'),
+    route('social-analytics', 'routes/dicer/protected/social-analytics/SocialAnalytics.tsx'),
     route('admin', 'routes/dicer/protected/admin/AdminPanel.tsx', [
       route('clients', 'routes/dicer/protected/admin/clients/Clients.tsx'),
       route('accounts', 'routes/dicer/protected/admin/accounts/Accounts.tsx'),
