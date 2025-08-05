@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
@@ -32,7 +32,6 @@ export function meta() {
 }
 
 export default function ResetPassword() {
-  const theme = useTheme();
   const navigate = useNavigate();
   const { showToaster } = useToaster();
   const [searchParams] = useSearchParams();
@@ -128,7 +127,6 @@ export default function ResetPassword() {
           label="New Password"
           name="password"
           type="password"
-          placeholder="Enter your new password"
           error={errors.password?.message}
           register={register}
           isRequired
@@ -140,7 +138,6 @@ export default function ResetPassword() {
           label="Confirm Password"
           name="confirmPassword"
           type="password"
-          placeholder="Confirm your new password"
           error={errors.confirmPassword?.message}
           register={register}
           isRequired

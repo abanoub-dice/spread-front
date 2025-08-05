@@ -17,7 +17,6 @@ interface TextFieldProps {
   label?: string;
   name: string;
   type?: 'text' | 'email' | 'password' | 'number';
-  placeholder?: string;
   error?: string;
   register: UseFormRegister<any>;
   isRequired?: boolean;
