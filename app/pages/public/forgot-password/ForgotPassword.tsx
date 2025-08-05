@@ -21,7 +21,10 @@ const schema = yup
 type ForgotPasswordFormData = yup.InferType<typeof schema>;
 
 export function meta() {
-  return [{ title: 'Forgot Password' }, { name: 'description', content: 'Get a reset link to your email' }];
+  return [
+    { title: 'Forgot Password' },
+    { name: 'description', content: 'Get a reset link to your email' },
+  ];
 }
 
 export default function ForgotPassword() {
@@ -41,10 +44,10 @@ export default function ForgotPassword() {
 
   const resetLinkMutation = useMutation({
     mutationFn: sendResetLink,
-    onSuccess: (data) => {
+    onSuccess: data => {
       showToaster('Password reset link has been sent to your email', 'success');
     },
-    onError: (error) => {
+    onError: error => {
       showToaster('Failed to send reset link. Please try again.', 'error');
     },
   });
@@ -56,35 +59,42 @@ export default function ForgotPassword() {
   const navigate = useNavigate();
 
   return (
-    <>
-      <Typography 
-        component="h1" 
-        variant="formHeader" 
-        sx={{ 
-          my: 2,
-          position: 'relative',
-          color: theme.palette.primary.main,
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            bottom: -8,
-            left: 0,
-            width: '100%',
-            height: '2px',
-            backgroundColor: theme.palette.primary.main,
-            borderRadius: '1px'
-          }
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: '400px',
+        mx: 'auto',
+      }}
+    >
+      {/* Welcome Header */}
+      <Typography
+        component="h4"
+        variant="h4"
+        sx={{
+          color: '#272220',
+          textAlign: 'center',
+          mb: 4,
+          fontWeight: 600,
         }}
       >
-        Forgot Password
+        Forgot Password?
       </Typography>
+
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
-        sx={{ mt: 1, width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3,
+        }}
       >
         <TextField
-          label="Email Address"
+          label="email"
           name="email"
           type="email"
           placeholder="Enter your email"
@@ -92,10 +102,11 @@ export default function ForgotPassword() {
           register={register}
           isRequired
           autoComplete="email"
+          showPasswordToggle={false}
         />
 
         <Box sx={{ textAlign: 'left' }}>
-          <Typography variant="caption" component="span">
+          <Typography variant="bodyRegular">
             Back to{'  '}
             <Box
               component="span"
@@ -104,7 +115,6 @@ export default function ForgotPassword() {
                 cursor: 'pointer',
                 '&:hover': {
                   textDecoration: 'underline',
-                  color: 'primary.dark',
                 },
               }}
               onClick={() => navigate(`/${userType}/login`)}
@@ -113,12 +123,12 @@ export default function ForgotPassword() {
             </Box>
           </Typography>
         </Box>
-
-        <FormButton 
-          label="Send Reset Link" 
+        <FormButton
+          label="Send Reset Link"
           isLoading={resetLinkMutation.isPending}
+          sx={{ mt: 2 }}
         />
       </Box>
-    </>
+    </Box>
   );
 }

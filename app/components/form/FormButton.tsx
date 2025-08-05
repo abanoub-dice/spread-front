@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material';
 import { useEffect, useState } from 'react';
 
@@ -52,10 +52,17 @@ export const FormButton = ({
       onClick={onClick}
       sx={{
         textTransform: 'inherit',
+        borderRadius: '999px',
+        padding: '16px 24px',
+        boxShadow: 'none',
+        '&:hover': {
+          boxShadow: '0 2px 8px rgba(254, 106, 0, 0.3)',
+        },
+        color: 'white',
         ...sx,
       }}
     >
-      {isLoading ? `Loading${dots}` : label}
+      {isLoading ? `Loading${dots}` : <Typography variant="h4">{label}</Typography>}
     </Button>
   );
 }; 

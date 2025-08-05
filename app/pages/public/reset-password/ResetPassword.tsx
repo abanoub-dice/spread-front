@@ -39,7 +39,7 @@ export default function ResetPassword() {
   const token = searchParams.get('token');
   const location = useLocation();
   const userType = location.pathname.includes('/dicer/') ? 'dicer' : 'client';
-  
+
   const {
     register,
     handleSubmit,
@@ -72,39 +72,57 @@ export default function ResetPassword() {
 
   if (!token) {
     return (
-      <Typography color="error" sx={{ mt: 2 }}>
-        Invalid or missing reset token. Please request a new password reset link.
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: '400px',
+          mx: 'auto',
+        }}
+      >
+        <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
+          Invalid or missing reset token. Please request a new password reset link.
+        </Typography>
+      </Box>
     );
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: '400px',
+        mx: 'auto',
+      }}
+    >
+      {/* Welcome Header */}
       <Typography
-        component="h1"
-        variant="formHeader"
+        component="h4"
+        variant="h4"
         sx={{
-          my: 2,
-          position: 'relative',
-          color: theme.palette.primary.main,
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            bottom: -8,
-            left: 0,
-            width: '100%',
-            height: '2px',
-            backgroundColor: theme.palette.primary.main,
-            borderRadius: '1px',
-          },
+          color: '#272220',
+          textAlign: 'center',
+          mb: 4,
+          fontWeight: 600,
         }}
       >
         Reset Password
       </Typography>
+
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
-        sx={{ mt: 1, width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3,
+        }}
       >
         <TextField
           label="New Password"
@@ -129,10 +147,13 @@ export default function ResetPassword() {
           autoComplete="new-password"
           showPasswordToggle
         />
-        <Box sx={{ mt: 2 }}>
-          <FormButton label="Reset Password" isLoading={resetPasswordMutation.isPending} />
-        </Box>
+
+        <FormButton
+          label="Reset Password"
+          isLoading={resetPasswordMutation.isPending}
+          sx={{ mt: 2 }}
+        />
       </Box>
-    </>
+    </Box>
   );
 }

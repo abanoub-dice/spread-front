@@ -1,10 +1,20 @@
-import { OutlinedInput, Typography, Box, InputAdornment, IconButton } from '@mui/material';
-import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import {
+  OutlinedInput,
+  Typography,
+  Box,
+  InputAdornment,
+  IconButton,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
+import { HiOutlineEye, HiMiniEyeSlash } from 'react-icons/hi2';
+
 import { useState } from 'react';
 import type { UseFormRegister } from 'react-hook-form';
+import type { SxProps, Theme } from '@mui/material';
 
 interface TextFieldProps {
-  label: string;
+  label?: string;
   name: string;
   type?: 'text' | 'email' | 'password' | 'number';
   placeholder?: string;
@@ -15,13 +25,13 @@ interface TextFieldProps {
   showPasswordToggle?: boolean;
   disabled?: boolean;
   endAdornment?: React.ReactNode;
+  sx?: SxProps<Theme>;
 }
 
 export const TextField = ({
   label,
   name,
   type = 'text',
-  placeholder,
   error,
   register,
   isRequired = false,
@@ -29,47 +39,90 @@ export const TextField = ({
   showPasswordToggle = false,
   disabled = false,
   endAdornment,
+  sx,
 }: TextFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const passwordToggle = showPasswordToggle ? (
+    <InputAdornment position="end">
+      <IconButton
+        aria-label="toggle password visibility"
+        onClick={() => setShowPassword(!showPassword)}
+        edge="end"
+        sx={{ color: 'text.secondary' }}
+      >
+        {showPassword ? <HiMiniEyeSlash /> : <HiOutlineEye />}
+      </IconButton>
+    </InputAdornment>
+  ) : null;
+
   return (
-    <Box sx={{ width: '100%' }}>
-      <Typography variant="subHeader" sx={{ ml: 1 }}>
-        {label}
-        {isRequired && <Box component="span" sx={{ color: 'error.main', ml: 0.5 }}>*</Box>}
-      </Typography>
-      <OutlinedInput
+    <Box sx={{ width: '100%', ...sx }}>
+      <FormControl
         fullWidth
-        type={showPasswordToggle ? (showPassword ? 'text' : 'password') : type}
-        id={name}
-        autoComplete={autoComplete}
+        variant="outlined"
         error={!!error}
-        placeholder={placeholder}
         disabled={disabled}
-        {...register(name)}
-        endAdornment={endAdornment}
-        sx={{
-          mt: 1,
-          '& .MuiInputBase-input': { 
-            fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' }, 
-            padding: '10px 16px' 
-          },
-          '& .MuiInputBase-input::placeholder': { 
-            fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' } 
-          },
-          '& .MuiOutlinedInput-root': {
+        sx={{ width: '100%' }}
+      >
+        {label && (
+          <InputLabel
+            htmlFor={name}
+            sx={{
+              transform: 'translate(14px, 12px) scale(1)',
+              '&.Mui-focused, &.MuiFormLabel-filled': {
+                transform: 'translate(14px, -10px) scale(0.75)',
+              },
+            }}
+          >
+            {label}
+          </InputLabel>
+        )}
+        <OutlinedInput
+          id={name}
+          label={label}
+          type={showPasswordToggle ? (showPassword ? 'text' : 'password') : type}
+          autoComplete={autoComplete}
+          disabled={disabled}
+          {...register(name)}
+          endAdornment={endAdornment || passwordToggle}
+          error={!!error}
+          sx={{
+            backgroundColor: '#f5f5f5',
             borderRadius: '10px',
+            '& .MuiInputBase-input': {
+              fontSize: { xs: '0.875rem', sm: '0.875rem', md: '0.875rem' },
+              padding: '12px 16px',
+              color: '#333',
+              '&::placeholder': {
+                color: '#999',
+                fontSize: '0.875rem',
+                opacity: 1,
+              },
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#e0e0e0',
+              borderWidth: '1px',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#ccc',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'primary.main',
+              borderWidth: '1px',
+            },
             '&.Mui-error': {
-              '& fieldset': {
+              backgroundColor: '#fff5f5',
+              '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'error.main',
               },
-              '&:hover fieldset': {
+              '&:hover .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'error.main',
               },
             },
-          },
-        }}
-      />
+          }}
+        />
+      </FormControl>
       {error && (
         <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1 }}>
           {error}
@@ -77,4 +130,4 @@ export const TextField = ({
       )}
     </Box>
   );
-}; 
+};

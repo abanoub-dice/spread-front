@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Box } from '@mui/material';
-import logo from '@/assets/spread-logo.svg';
+import logo from '@/assets/auth/logo.svg';
 import banner from '@/assets/auth/login_banner.png';
 import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
 import { checkAuth } from '~/utils/store/slices/userSlice';
@@ -35,7 +35,7 @@ const imageSx = {
 };
 
 const logoBoxSx = {
-  width: '40%',
+  // width: '40%',
   display: 'flex',
   justifyContent: 'center',
   mb: 3,
@@ -43,6 +43,15 @@ const logoBoxSx = {
     maxWidth: '200px',
     height: 'auto',
   },
+};
+
+const formContainerSx = {
+  width: '100%',
+  maxWidth: '500px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 export default function ClientPublicLayout() {
@@ -73,7 +82,9 @@ export default function ClientPublicLayout() {
         <Box component="figure" sx={logoBoxSx}>
           <img src={logo} alt="Grid by Dice logo" />
         </Box>
-        <Outlet />
+        <Box sx={formContainerSx}>
+          <Outlet />
+        </Box>
       </Box>
       <Box sx={imageSx}>
         <img src={banner} alt="Grid by Dice" />

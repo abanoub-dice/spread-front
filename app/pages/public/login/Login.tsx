@@ -13,6 +13,7 @@ import { setUser } from '~/utils/store/slices/userSlice';
 import type { AxiosError } from 'axios';
 import type { ErrorResponse } from '~/utils/api/axiosInstance';
 import { useToaster } from '~/components/Toaster';
+import SpreadLogo from '~/assets/spread-logo.svg';
 
 const schema = yup
   .object({
@@ -68,49 +69,55 @@ export default function LoginForm() {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: '400px',
+        mx: 'auto',
+      }}
+    >
+      {/* Welcome Header */}
       <Typography
-        component="h1"
-        variant="formHeader"
+        component="h4"
+        variant="h4"
         sx={{
-          my: 2,
-          position: 'relative',
-          color: theme.palette.primary.main,
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            bottom: -8,
-            left: 0,
-            width: '100%',
-            height: '2px',
-            backgroundColor: theme.palette.primary.main,
-            borderRadius: '1px',
-          },
+          color: '#272220',
+          textAlign: 'center',
+          mb: 4,
+          fontWeight: 600,
         }}
       >
-        Sign In
+        Welcome back!
       </Typography>
+
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
-        sx={{ mt: 1, width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3,
+        }}
       >
         <TextField
-          label="Email Address"
           name="email"
           type="email"
-          placeholder="Enter your email"
+          label="email"
           error={errors.email?.message}
           register={register}
           isRequired
           autoComplete="email"
+          showPasswordToggle={false}
         />
 
         <TextField
-          label="Password"
           name="password"
           type="password"
-          placeholder="Enter your password"
+          label="password"
           error={errors.password?.message}
           register={register}
           isRequired
@@ -118,28 +125,31 @@ export default function LoginForm() {
           showPasswordToggle
         />
 
-        <Box sx={{ textAlign: 'left' }}>
-          <Typography variant="caption" component="span">
-            Forgot your password?{' '}
-            <Box
-              component="span"
-              sx={{
-                color: 'primary.main',
-                cursor: 'pointer',
-                '&:hover': {
-                  textDecoration: 'underline',
-                  color: 'primary.dark',
-                },
-              }}
-              onClick={() => navigate(`/${userType}/forgot-password`)}
-            >
-              Reset it here
-            </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mt: 1,
+          }}
+        >
+          <Typography
+            variant="bodyRegular"
+            sx={{
+              color: 'primary.main',
+              cursor: 'pointer',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            }}
+            onClick={() => navigate(`/${userType}/forgot-password`)}
+          >
+            Forgot Password?
           </Typography>
         </Box>
 
-        <FormButton label="Sign in" isLoading={loginMutation.isPending} />
+        <FormButton label="Log In" isLoading={loginMutation.isPending} sx={{ mt: 2 }} />
       </Box>
-    </>
+    </Box>
   );
 }
