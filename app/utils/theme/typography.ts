@@ -31,6 +31,7 @@ declare module '@mui/material/Typography' {
 
 // Define each variant as a constant
 export const h1 = {
+  fontFamily: '"TT Firs Neue", sans-serif',
   fontSize: '64px',
   lineHeight: '120%',
   fontWeight: 300, // Light weight
@@ -48,6 +49,7 @@ export const h1 = {
 };
 
 export const h2 = {
+  fontFamily: '"TT Firs Neue", sans-serif',
   fontSize: '48px',
   lineHeight: '120%',
   fontWeight: 300, // Light weight
@@ -65,6 +67,7 @@ export const h2 = {
 };
 
 export const h3 = {
+  fontFamily: '"TT Firs Neue", sans-serif',
   fontSize: '40px',
   lineHeight: '120%',
   fontWeight: 300, // Light weight
@@ -82,6 +85,7 @@ export const h3 = {
 };
 
 export const h4 = {
+  fontFamily: '"TT Firs Neue", sans-serif',
   fontSize: '32px',
   lineHeight: '120%',
   fontWeight: 300, // Light weight
@@ -99,6 +103,7 @@ export const h4 = {
 };
 
 export const h5 = {
+  fontFamily: '"TT Firs Neue", sans-serif',
   fontSize: '24px',
   lineHeight: '120%',
   fontWeight: 300, // Light weight
@@ -116,6 +121,7 @@ export const h5 = {
 };
 
 export const h6 = {
+  fontFamily: '"TT Firs Neue", sans-serif',
   fontSize: '20px',
   lineHeight: '120%',
   fontWeight: 300, // Light weight
