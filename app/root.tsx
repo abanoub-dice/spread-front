@@ -51,7 +51,7 @@ function ClientOnly({ children }: { children: React.ReactNode }) {
 }
 
 export const links: Route.LinksFunction = () => [
-  { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+  { rel: 'icon', type: 'image/png', href: '/favicon.svg' },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
     rel: 'preconnect',
