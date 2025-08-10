@@ -9,8 +9,8 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Pagination from '~/components/shared/Pagination';
 import { Typography } from '@mui/material';
-import { useAppDispatch } from '~/utils/store/hooks/hooks';
-import { setDialogue } from '~/utils/store/slices/dialogueSlice';
+import { useDialogueStore } from '~/utils/store/zustandHooks';
+
 
 const membersData = {
   current_page: 1,
@@ -36,23 +36,21 @@ const membersData = {
 
 const TeamMembersTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(membersData.current_page);
-  const dispatch = useAppDispatch();
+  const setDialogue = useDialogueStore((state) => state.setDialogue);
 
   const handleDelete = (member: typeof membersData.data[number]) => {
-    dispatch(
-      setDialogue({
-        show: true,
-        title: 'Delete Team Member',
-        text: `Are you sure you want to delete ${member.name}?`,
-        acceptLabel: 'Delete',
-        acceptColor: 'error',
-        closable: true,
-        onAccept: () => {
-          // Replace this with actual delete logic
-          console.log('Deleting member:', member);
-        },
-      })
-    );
+    setDialogue({
+      show: true,
+      title: 'Delete Team Member',
+      text: `Are you sure you want to delete ${member.name}?`,
+      acceptLabel: 'Delete',
+      acceptColor: 'error',
+      closable: true,
+      onAccept: () => {
+        // Replace this with actual delete logic
+        console.log('Deleting member:', member);
+      },
+    });
   };
 
   return (

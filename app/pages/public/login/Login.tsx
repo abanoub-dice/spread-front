@@ -8,12 +8,10 @@ import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
 import { userLogin } from '~/utils/api/authApis';
 import type { LoginCredentials } from '~/utils/interfaces/user';
-import { useAppDispatch } from '~/utils/store/hooks/hooks';
-import { setUser } from '~/utils/store/slices/userSlice';
+import { useUserStore } from '~/utils/store/zustandHooks';
 import type { AxiosError } from 'axios';
 import type { ErrorResponse } from '~/utils/api/axiosInstance';
 import { useToaster } from '~/components/Toaster';
-import SpreadLogo from '~/assets/spread-logo.svg';
 
 const schema = yup
   .object({
@@ -34,7 +32,7 @@ export function meta() {
 
 export default function LoginForm() {
   const theme = useTheme();
-  const dispatch = useAppDispatch();
+  const { setUser } = useUserStore();
   const navigate = useNavigate();
   const location = useLocation();
   const { showToaster } = useToaster();
@@ -54,7 +52,7 @@ export default function LoginForm() {
   const loginMutation = useMutation({
     mutationFn: (data: LoginCredentials) => userLogin({ ...data, userType }),
     onSuccess: data => {
-      dispatch(setUser({ user: data.user, token: data.access_token }));
+      setUser(data.user, data.access_token);
       // Navigate based on user type
       const redirectPath = userType === 'client' ? '/client' : '/';
       navigate(redirectPath, { replace: true });
@@ -109,7 +107,6 @@ export default function LoginForm() {
           label="email"
           error={errors.email?.message}
           register={register}
-          isRequired
           autoComplete="email"
           showPasswordToggle={false}
         />
@@ -120,7 +117,6 @@ export default function LoginForm() {
           label="password"
           error={errors.password?.message}
           register={register}
-          isRequired
           autoComplete="current-password"
           showPasswordToggle
         />

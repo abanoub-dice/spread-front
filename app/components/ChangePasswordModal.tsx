@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
-import { showLoader, hideLoader } from '~/utils/store/slices/loaderSlice';
-import { useAppDispatch } from '~/utils/store/hooks/hooks';
+import { useLoaderStore } from '~/utils/store/zustandHooks';
+import { useUserStore } from '~/utils/store/zustandHooks';
 import { axiosInstance } from '~/utils/api/axiosInstance';
 import { TextField } from './form/TextField';
 import { useToaster } from '~/components/Toaster';
-import { resetUser } from '~/utils/store/slices/userSlice';
+
 import CloseIcon from '@mui/icons-material/Close';
 import { AxiosError } from 'axios';
 
@@ -34,7 +34,8 @@ interface ChangePasswordModalProps {
 }
 
 export default function ChangePasswordModal({ open, onClose }: ChangePasswordModalProps) {
-  const dispatch = useAppDispatch();
+  const { resetUser } = useUserStore();
+  const { showLoader, hideLoader } = useLoaderStore();
   const theme = useTheme();
   const { showToaster } = useToaster();
 
@@ -60,16 +61,16 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
     mutationFn: (data: { newPassword: string }) =>
       axiosInstance.patch('/v1/users/change-password', data),
     onMutate: () => {
-      dispatch(showLoader());
+      showLoader();
     },
     onSuccess: () => {
-      dispatch(hideLoader());
+      hideLoader();
       showToaster('Password changed successfully', 'success');
-      dispatch(resetUser());
+      resetUser();
       handleClose();
     },
     onError: (error: AxiosError) => {
-      dispatch(hideLoader());
+      hideLoader();
       showToaster(
         (error.response?.data as { message?: string })?.message || 'Failed to change password',
         'error'
@@ -111,7 +112,7 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
           }}
         >
           <Typography
-            variant="formHeader"
+            variant="h1"
             sx={{
               position: 'relative',
               color: theme.palette.primary.main,
@@ -159,8 +160,6 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
                 label="New Password"
                 type="password"
                 error={errors.newPassword?.message}
-                placeholder="Enter new password"
-                isRequired
                 showPasswordToggle
                 autoComplete="new-password"
               />
@@ -172,18 +171,12 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
                 label="Confirm Password"
                 type="password"
                 error={errors.confirmPassword?.message}
-                placeholder="Confirm new password"
-                isRequired
                 showPasswordToggle
                 autoComplete="new-password"
               />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-              <Button 
-                onClick={handleClose} 
-                variant="outlined"
-                sx={{ textTransform: 'capitalize' }}
-              >
+              <Button onClick={handleClose} variant="outlined" sx={{ textTransform: 'capitalize' }}>
                 Cancel
               </Button>
               <Button
@@ -200,4 +193,4 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
       </Box>
     </Modal>
   );
-} 
+}

@@ -7,7 +7,7 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
-import { HiOutlineEye, HiMiniEyeSlash } from 'react-icons/hi2';
+import { Eye, EyeSlash } from 'iconsax-reactjs';
 
 import { useState } from 'react';
 import type { UseFormRegister } from 'react-hook-form';
@@ -48,7 +48,7 @@ export const TextField = ({
         edge="end"
         sx={{ color: 'text.secondary' }}
       >
-        {showPassword ? <HiMiniEyeSlash /> : <HiOutlineEye />}
+        {showPassword ? <EyeSlash /> : <Eye />}
       </IconButton>
     </InputAdornment>
   ) : null;

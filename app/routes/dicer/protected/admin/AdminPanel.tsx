@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useAppSelector } from '~/utils/store/hooks/hooks';
+import { useUserStore } from '~/utils/store/zustandHooks';
 import { UserRole } from '~/utils/interfaces/user';
 
 const adminTabs = [
@@ -15,7 +15,7 @@ export default function AdminPanel() {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const { user } = useAppSelector(state => state.user.data);
+  const user = useUserStore((state) => state.user);
 
   useEffect(() => {
     if (user && 'role' in user && user.role !== UserRole.ADMIN) {

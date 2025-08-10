@@ -2,17 +2,16 @@ import { useState } from 'react';
 import { Box, Typography, Button, Stack } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
+import { useDialogueStore, useUserStore } from '~/utils/store/zustandHooks';
 import UsersTable from './components/UsersTable';
 import UsersTableSkeleton from './components/UsersTableSkeleton';
 import UserModal from './components/UserModal';
 import AdminChangePasswordModal from './components/AdminChangePasswordModal';
 import Pagination from '~/components/shared/Pagination';
-import type { User, UsersResponse, UserFormData } from '../../../utils/interfaces/user';
+import type { User, UsersResponse, UserFormData } from '~/utils/interfaces/user';
 import axiosInstance from '~/utils/api/axiosInstance';
 import { useToaster } from '~/components/Toaster';
-import { useAppSelector } from '~/utils/store/hooks/hooks';
-import { setDialogue } from '~/utils/store/slices/dialogueSlice';
+
 
 export default function Users() {
   const [page, setPage] = useState(1);
@@ -20,10 +19,10 @@ export default function Users() {
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | undefined>();
   const [modalMode, setModalMode] = useState<'create' | 'update'>('create');
-  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { showToaster } = useToaster();
-  const currentUser = useAppSelector(state => state.user.data.user);
+  const currentUser = useUserStore((state) => state.user);
+  const setDialogue = useDialogueStore((state) => state.setDialogue);
 
   const { data, isLoading } = useQuery({
     queryKey: ['users', page],
@@ -109,34 +108,32 @@ export default function Users() {
       return;
     }
 
-    dispatch(
-      setDialogue({
-        show: true,
-        title: 'Delete User',
-        text: (
-          <Box>
-            Are you sure you want to delete user{' '}
-            <Typography
-              component="span"
-              sx={{
-                color: 'primary.main',
-                fontWeight: 600,
-                display: 'inline',
-              }}
-            >
-              {user.firstName} {user.lastName}
-            </Typography>
-            ?
-          </Box>
-        ),
-        acceptLabel: 'Delete',
-        acceptColor: 'error.main',
-        closable: true,
-        onAccept: () => {
-          deleteMutation.mutate(user.id.toString());
-        },
-      } as any)
-    );
+    setDialogue({
+      show: true,
+      title: 'Delete User',
+      text: (
+        <Box>
+          Are you sure you want to delete user{' '}
+          <Typography
+            component="span"
+            sx={{
+              color: 'primary.main',
+              fontWeight: 600,
+              display: 'inline',
+            }}
+          >
+            {user.firstName} {user.lastName}
+          </Typography>
+          ?
+        </Box>
+      ),
+      acceptLabel: 'Delete',
+      acceptColor: 'error.main',
+      closable: true,
+      onAccept: () => {
+        deleteMutation.mutate(user.id.toString());
+      },
+    } as any);
   };
 
   const handleModalClose = () => {

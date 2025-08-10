@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '~/utils/store/hooks/hooks';
-import { getUser } from '~/utils/store/slices/userSlice';
+import { useDialogueStore, useUserStore } from '~/utils/store/zustandHooks';
+
+
 import {
   AppBar,
   Toolbar,
@@ -21,7 +21,7 @@ import { IoSettingsOutline, IoSettings } from 'react-icons/io5';
 import SpreadLogo from '~/assets/spread-logo.svg';
 import ChangePasswordModal from '~/components/ChangePasswordModal';
 import Dialog from '~/components/Dialog';
-import { setDialogue } from '~/utils/store/slices/dialogueSlice';
+
 
 interface NavbarProps {
   avatarUrl?: string;
@@ -30,13 +30,13 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ avatarUrl, onLogout }) => {
   // Log user state
-  const userState = useAppSelector(getUser);
+  const userState = useUserStore((state) => state.user);
+  const setDialogue = useDialogueStore((state) => state.setDialogue);
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null);
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
 
   const handleNotificationClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotificationAnchorEl(event.currentTarget);
@@ -66,19 +66,17 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, onLogout }) => {
   };
 
   const handleLogout = () => {
-    dispatch(
-      setDialogue({
-        show: true,
-        title: 'Confirm Logout',
-        text: 'Are you sure you want to logout?',
-        acceptLabel: 'Logout',
-        acceptColor: 'error',
-        closable: true,
-        onAccept: () => {
-          onLogout();
-        },
-      })
-    );
+    setDialogue({
+      show: true,
+      title: 'Confirm Logout',
+      text: 'Are you sure you want to logout?',
+      acceptLabel: 'Logout',
+      acceptColor: 'error',
+      closable: true,
+      onAccept: () => {
+        onLogout();
+      },
+    });
     handleClose();
   };
 

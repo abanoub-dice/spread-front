@@ -114,7 +114,6 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
           p: 2,
           cursor: disabled ? 'default' : 'pointer',
           '&:hover': {
-            backgroundColor: disabled ? 'transparent' : 'background.defaultSecondary',
             borderColor: disabled ? '#e0e0e0' : 'primary.main',
           },
           '&:focus-within': {
@@ -140,19 +139,18 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
           }}
           title={selectedOption ? selectedOption.label : placeholder}
         >
-          {selectedOption 
-            ? (selectedOption.label.length > 20 ? `${selectedOption.label.substring(0, 20)}...` : selectedOption.label)
-            : placeholder
-          }
+          {selectedOption
+            ? selectedOption.label.length > 20
+              ? `${selectedOption.label.substring(0, 20)}...`
+              : selectedOption.label
+            : placeholder}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {loading && (
-            <CircularProgress size={16} sx={{ color: 'text.light' }} />
-          )}
+          {loading && <CircularProgress size={16} sx={{ color: 'text.light' }} />}
           <IconButton
             size="small"
             sx={{
-              transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+              transform: !isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
               transition: 'transform 0.2s',
               color: 'text.dark',
               p: 0.5,
@@ -229,7 +227,15 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
           <List sx={{ p: 0, maxHeight: 200, overflow: 'auto' }}>
             {loading ? (
               <ListItem sx={{ py: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', gap: 2 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    gap: 2,
+                  }}
+                >
                   <CircularProgress size={20} sx={{ color: 'primary.main' }} />
                   <Typography variant="body2" color="text.light">
                     Loading options...
@@ -238,7 +244,15 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
               </ListItem>
             ) : filteredOptions.length === 0 ? (
               <ListItem sx={{ py: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', gap: 2 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    gap: 2,
+                  }}
+                >
                   <SearchStatus size={20} color="#999" />
                   <Typography variant="body2" color="text.light">
                     {searchTerm ? 'No options found' : 'No options available'}
@@ -275,7 +289,9 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
                           }}
                           title={option.label}
                         >
-                          {option.label.length > 20 ? `${option.label.substring(0, 20)}...` : option.label}
+                          {option.label.length > 20
+                            ? `${option.label.substring(0, 20)}...`
+                            : option.label}
                         </Typography>
                       }
                     />

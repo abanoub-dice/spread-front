@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
-import { showLoader, hideLoader } from '~/utils/store/slices/loaderSlice';
-import { useAppDispatch } from '~/utils/store/hooks/hooks';
+
+import { useLoaderStore } from '~/utils/store/zustandHooks';
 import { axiosInstance } from '~/utils/api/axiosInstance';
 import { TextField } from '~/components/form/TextField';
 import { useToaster } from '~/components/Toaster';
@@ -37,7 +37,7 @@ export default function AdminChangePasswordModal({
   onClose,
   userId,
 }: AdminChangePasswordModalProps) {
-  const dispatch = useAppDispatch();
+  const { showLoader, hideLoader } = useLoaderStore();
   const theme = useTheme();
   const { showToaster } = useToaster();
   const {
@@ -61,15 +61,15 @@ export default function AdminChangePasswordModal({
   const changePasswordMutation = useMutation({
     mutationFn: (data: { password: string }) => axiosInstance.put(`/v1/admin/users/${userId}`, data),
     onMutate: () => {
-      dispatch(showLoader());
+      showLoader();
     },
     onSuccess: () => {
-      dispatch(hideLoader());
+      hideLoader();
       showToaster('User password changed successfully', 'success');
       handleClose();
     },
     onError: (error: any) => {
-      dispatch(hideLoader());
+      hideLoader();
       showToaster(error.response?.data?.message || 'Failed to change user password', 'error');
     },
   });

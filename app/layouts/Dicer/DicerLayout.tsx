@@ -4,8 +4,7 @@ import AccountSelector from '../../components/dicer/dashboard-header/AccountSele
 import DicerNavigation from '../../components/dicer/tabs/DicerNavigation';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
-import { checkAuth } from '~/utils/store/slices/userSlice';
+import { useUserStore } from '~/utils/store/zustandHooks';
 import { UserType } from '~/utils/interfaces/user';
 
 interface Account {
@@ -19,14 +18,13 @@ export default function Layout() {
   const [selectedAccount, setSelectedAccount] = useState<Account | undefined>();
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { authenticated, user } = useAppSelector(state => state.user.data);
+  const { authenticated, user, checkAuth } = useUserStore();
   const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
 
   useEffect(() => {
     if (hasToken) {
       if (!authenticated) {
-        dispatch(checkAuth());
+        checkAuth();
         return;
       }
       if (authenticated && user && user.type !== UserType.DICER) {
@@ -36,7 +34,7 @@ export default function Layout() {
       navigate('/dicer/login', { replace: true });
       return;
     }
-  }, [hasToken, authenticated, user, navigate, dispatch]);
+  }, [hasToken, authenticated, user, navigate, checkAuth]);
 
   const handleAccountSelect = (account: Account) => {
     setSelectedAccount(account);

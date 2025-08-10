@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { Box } from '@mui/material';
 import logo from '@/assets/auth/logo.svg';
 import banner from '@/assets/auth/login_banner.png';
-import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
-import { checkAuth } from '~/utils/store/slices/userSlice';
+import { useUserStore } from '~/utils/store/zustandHooks';
 import { UserType } from '~/utils/interfaces/user';
 
 const containerSx = {
@@ -56,14 +55,13 @@ const formContainerSx = {
 
 export default function ClientPublicLayout() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { authenticated, user } = useAppSelector(state => state.user.data);
+  const { authenticated, user, checkAuth } = useUserStore();
   const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
 
   useEffect(() => {
     if (hasToken) {
       if (!authenticated) {
-        dispatch(checkAuth());
+        checkAuth();
         return;
       }
       if (authenticated && user) {
@@ -74,7 +72,7 @@ export default function ClientPublicLayout() {
         }
       }
     }
-  }, [hasToken, authenticated, user, navigate, dispatch]);
+  }, [hasToken, authenticated, user, navigate, checkAuth]);
 
   return (
     <Box sx={containerSx}>

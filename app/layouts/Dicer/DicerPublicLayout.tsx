@@ -1,10 +1,9 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
-import logo from '@/assets/spread-logo.svg';
+import logo from '@/assets/spread-no-text.svg';
 import banner from '@/assets/auth/login_banner.png';
 import { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
-import { checkAuth } from '~/utils/store/slices/userSlice';
+import { useUserStore } from '~/utils/store/zustandHooks';
 import { UserType } from '~/utils/interfaces/user';
 
 const containerSx = {
@@ -35,26 +34,22 @@ const imageSx = {
 };
 
 const logoBoxSx = {
-  width: '40%',
-  display: 'flex',
-  justifyContent: 'center',
   mb: 3,
   '& img': {
-    maxWidth: '200px',
+    maxWidth: '50px',
     height: 'auto',
   },
 };
 
 export default function DicerPublicLayout() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { authenticated, user } = useAppSelector(state => state.user.data);
+  const { authenticated, user, checkAuth } = useUserStore();
   const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
 
   useEffect(() => {
     if (hasToken) {
       if (!authenticated) {
-        dispatch(checkAuth());
+        checkAuth();
         return;
       }
       if (authenticated && user) {
@@ -65,7 +60,7 @@ export default function DicerPublicLayout() {
         }
       }
     }
-  }, [hasToken, authenticated, user, navigate, dispatch]);
+  }, [hasToken, authenticated, user, navigate, checkAuth]);
 
   return (
     <Box sx={containerSx}>

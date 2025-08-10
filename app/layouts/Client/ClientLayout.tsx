@@ -1,21 +1,19 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '~/utils/store/hooks/hooks';
-import { checkAuth } from '~/utils/store/slices/userSlice';
+import { useUserStore } from '~/utils/store/zustandHooks';
 import { UserType } from '~/utils/interfaces/user';
 import Navbar from '../../components/shared/navbar/Navbar';
 import Banner from '../../components/client/Banner';
 
 export default function Layout() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { authenticated, user } = useAppSelector(state => state.user.data);
+  const { authenticated, user, checkAuth } = useUserStore();
   const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
 
   useEffect(() => {
     if (hasToken) {
       if (!authenticated) {
-        dispatch(checkAuth());
+        checkAuth();
         return;
       }
       if (authenticated && user && user.type !== UserType.CLIENT) {
@@ -25,7 +23,7 @@ export default function Layout() {
       navigate('/client/login', { replace: true });
       return;
     }
-  }, [hasToken, authenticated, user, navigate, dispatch]);
+  }, [hasToken, authenticated, user, navigate, checkAuth]);
 
   if (!authenticated) return null;
 

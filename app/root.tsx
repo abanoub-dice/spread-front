@@ -17,11 +17,7 @@ import { CssBaseline, ThemeProvider as MUIThemeProvider } from '@mui/material';
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import theme from './utils/theme/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Provider } from 'react-redux';
-import { store } from './utils/store/store';
-import { useAppSelector, useAppDispatch } from './utils/store/hooks/hooks';
-import { checkAuth } from './utils/store/slices/userSlice';
-import { hideLoader, showLoader } from './utils/store/slices/loaderSlice';
+import { useLoader } from './utils/store/zustandHooks';
 import { ToasterProvider } from './components/Toaster';
 import { Loader } from './components/Loader';
 import Dialog from './components/Dialog';
@@ -88,7 +84,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 // New component to handle authentication logic
 function AppContent() {
-  const isLoading = useAppSelector(state => state.loader.isLoading);
+  const isLoading = useLoader();
 
   return (
     <>
@@ -106,11 +102,9 @@ export default function App() {
         <EmotionThemeProvider theme={theme}>
           <CssBaseline />
           <ClientOnly>
-            <Provider store={store}>
-              <ToasterProvider>
-                <AppContent />
-              </ToasterProvider>
-            </Provider>
+            <ToasterProvider>
+              <AppContent />
+            </ToasterProvider>
           </ClientOnly>
         </EmotionThemeProvider>
       </MUIThemeProvider>

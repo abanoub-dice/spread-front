@@ -8,9 +8,7 @@ import {
   Box,
   styled,
 } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDialogue, resetDialogue } from '../utils/store/slices/dialogueSlice';
-import type { RootState } from '../utils/store/store';
+import { useDialogueStore } from '../utils/store/zustandHooks';
 
 // Styled components
 const StyledDialog = styled(MuiDialog)({
@@ -69,11 +67,11 @@ interface DialogueState {
 }
 
 const Dialog: React.FC = () => {
-  const dispatch = useDispatch();
-  const dialogue = useSelector((state: RootState) => getDialogue(state)) as DialogueState;
+  const dialogue = useDialogueStore((state) => state.data);
+  const resetDialogue = useDialogueStore((state) => state.resetDialogue);
 
   const handleClose = () => {
-    dispatch(resetDialogue());
+    resetDialogue();
   };
 
   const handleAccept = () => {

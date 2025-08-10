@@ -15,8 +15,8 @@ import { FiEdit } from 'react-icons/fi';
 import { GoTrash } from 'react-icons/go';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Category } from '~/utils/interfaces/category';
-import { useAppDispatch } from '~/utils/store/hooks/hooks';
-import { setDialogue } from '~/utils/store/slices/dialogueSlice';
+import { useDialogueStore } from '~/utils/store/zustandHooks';
+
 import axiosInstance from '~/utils/api/axiosInstance';
 import { useToaster } from '~/components/Toaster';
 import { QUERY_KEYS } from '~/utils/constants/queryKeys';
@@ -27,7 +27,7 @@ interface CategoriesTableProps {
 }
 
 export default function CategoriesTable({ categories = [], onEdit }: CategoriesTableProps) {
-  const dispatch = useAppDispatch();
+  const setDialogue = useDialogueStore((state) => state.setDialogue);
   const queryClient = useQueryClient();
   const { showToaster } = useToaster();
 
@@ -54,34 +54,32 @@ export default function CategoriesTable({ categories = [], onEdit }: CategoriesT
       return;
     }
 
-    dispatch(
-      setDialogue({
-        show: true,
-        title: 'Delete Category',
-        text: (
-          <Box>
-            Are you sure you want to delete category{' '}
-            <Typography
-              component="span"
-              sx={{
-                color: 'primary.main',
-                fontWeight: 600,
-                display: 'inline',
-              }}
-            >
-              {category.name}
-            </Typography>
-            ?
-          </Box>
-        ),
-        acceptLabel: 'Delete',
-        acceptColor: 'error.main',
-        closable: true,
-        onAccept: () => {
-          deleteMutation.mutate(category.id as string);
-        },
-      } as any)
-    );
+    setDialogue({
+      show: true,
+      title: 'Delete Category',
+      text: (
+        <Box>
+          Are you sure you want to delete category{' '}
+          <Typography
+            component="span"
+            sx={{
+              color: 'primary.main',
+              fontWeight: 600,
+              display: 'inline',
+            }}
+          >
+            {category.name}
+          </Typography>
+          ?
+        </Box>
+      ),
+      acceptLabel: 'Delete',
+      acceptColor: 'error.main',
+      closable: true,
+      onAccept: () => {
+        deleteMutation.mutate(category.id as string);
+      },
+    } as any);
   };
 
   return (
