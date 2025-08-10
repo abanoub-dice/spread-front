@@ -1,4 +1,9 @@
-import React from 'react';
+export function meta() {
+  return [
+    { title: "Accounts Management - Spread" },
+    { name: "description", content: "Manage platform accounts, billing, and subscription settings with Spread's account management tools" },
+  ];
+}
 
 export default function Accounts() {
   return (

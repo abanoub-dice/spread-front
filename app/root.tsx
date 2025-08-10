@@ -5,14 +5,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLocation,
-  useNavigate,
-  matchPath,
 } from 'react-router';
 import type { Route } from './+types/root';
 import './app.css';
-import { useState, useEffect, useRef } from 'react';
-import { publicRoutesList } from './routes';
+import { useState, useEffect } from 'react';
 import { CssBaseline, ThemeProvider as MUIThemeProvider } from '@mui/material';
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import theme from './utils/theme/theme';
@@ -27,6 +23,19 @@ import { UserType } from './utils/interfaces/user';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      retry: 0,
+      select: (data: any) => {
+        // If the data is an axios response, extract the data property
+        if (data && typeof data === 'object' && 'data' in data) {
+          return data.data;
+        }
+        return data;
+      },
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: 'always',
+      refetchOnReconnect: 'always',
+    },
+    mutations: {
       retry: 0,
     },
   },

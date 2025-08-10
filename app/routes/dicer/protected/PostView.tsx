@@ -1,5 +1,11 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
+
+export function meta() {
+  return [
+    { title: "Post View - Spread" },
+    { name: "description", content: "View and edit your social media posts with Spread's detailed post management interface" },
+  ];
+}
 
 export default function PostView() {
   const { id } = useParams();

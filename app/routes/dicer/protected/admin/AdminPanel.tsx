@@ -5,6 +5,13 @@ import { useTheme } from '@mui/material/styles';
 import { useUserStore } from '~/utils/store/zustandHooks';
 import { UserRole } from '~/utils/interfaces/user';
 
+export function meta() {
+  return [
+    { title: "Admin Panel - Spread" },
+    { name: "description", content: "Manage clients, accounts, and team members with Spread's comprehensive admin panel" },
+  ];
+}
+
 const adminTabs = [
   { label: 'Clients', path: '/dicer/admin/clients' },
   { label: 'Accounts', path: '/dicer/admin/accounts' },

@@ -45,77 +45,73 @@ export const AccountSelector: React.FC<AccountSelectorProps> = ({
 
   // Fetch accounts using React Query
   const {
-    data: accountsResponse,
+    data: accounts = [],
     isLoading: accountsLoading,
     error: accountsError,
-  } = useQuery<{ data: AccountApiResponse[] }>({
+  } = useQuery<AccountApiResponse[]>({
     queryKey: [QUERY_KEYS.ACCOUNTS],
     queryFn: () => {
       return axiosInstance.get('/v1/dicer/accounts');
     },
     // Add dummy data for testing
-    initialData: {
-      data: [
-        {
-          id: 1,
-          name: 'Instagram Account 1',
-          logo: 'https://via.placeholder.com/40',
-          pmp_link: null,
-          description: 'Main Instagram business account',
-          monthly_posts_limit: 30,
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-01T00:00:00Z',
-          deleted_at: null,
-        },
-        {
-          id: 2,
-          name: 'Facebook Business Page saddsad ',
-          logo: 'https://via.placeholder.com/40',
-          pmp_link: null,
-          description: 'Company Facebook page',
-          monthly_posts_limit: 25,
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-01T00:00:00Z',
-          deleted_at: null,
-        },
-        {
-          id: 3,
-          name: 'Twitter Profile',
-          logo: 'https://via.placeholder.com/40',
-          pmp_link: null,
-          description: 'Official Twitter handle',
-          monthly_posts_limit: 50,
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-01T00:00:00Z',
-          deleted_at: null,
-        },
-        {
-          id: 4,
-          name: 'LinkedIn Company Page',
-          logo: 'https://via.placeholder.com/40',
-          pmp_link: null,
-          description: 'Professional LinkedIn presence',
-          monthly_posts_limit: 20,
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-01T00:00:00Z',
-          deleted_at: null,
-        },
-        {
-          id: 5,
-          name: 'TikTok Creator Account',
-          logo: 'https://via.placeholder.com/40',
-          pmp_link: null,
-          description: 'TikTok content creator account',
-          monthly_posts_limit: 40,
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-01T00:00:00Z',
-          deleted_at: null,
-        },
-      ],
-    },
+    initialData: [
+      {
+        id: 1,
+        name: 'Instagram Account 1',
+        logo: 'https://via.placeholder.com/40',
+        pmp_link: null,
+        description: 'Main Instagram business account',
+        monthly_posts_limit: 30,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+        deleted_at: null,
+      },
+      {
+        id: 2,
+        name: 'Facebook Business Page saddsad ',
+        logo: 'https://via.placeholder.com/40',
+        pmp_link: null,
+        description: 'Company Facebook page',
+        monthly_posts_limit: 25,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+        deleted_at: null,
+      },
+      {
+        id: 3,
+        name: 'Twitter Profile',
+        logo: 'https://via.placeholder.com/40',
+        pmp_link: null,
+        description: 'Official Twitter handle',
+        monthly_posts_limit: 50,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+        deleted_at: null,
+      },
+      {
+        id: 4,
+        name: 'LinkedIn Company Page',
+        logo: 'https://via.placeholder.com/40',
+        pmp_link: null,
+        description: 'Professional LinkedIn presence',
+        monthly_posts_limit: 20,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+        deleted_at: null,
+      },
+      {
+        id: 5,
+        name: 'TikTok Creator Account',
+        logo: 'https://via.placeholder.com/40',
+        pmp_link: null,
+        description: 'TikTok content creator account',
+        monthly_posts_limit: 40,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+        deleted_at: null,
+      },
+    ],
   });
-
-  const accounts = accountsResponse?.data || [];
 
   // Handle error state
   useEffect(() => {

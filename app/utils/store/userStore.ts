@@ -41,7 +41,7 @@ interface UserActions {
 
 type UserStore = UserState & UserActions;
 
-export const useUserStore = create<UserStore>((set, get) => ({
+export const useUserStore = create<UserStore>((set) => ({
   authenticated: false,
   user: null,
   isLoading: false,

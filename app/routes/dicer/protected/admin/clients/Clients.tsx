@@ -1,4 +1,9 @@
-import React from 'react';
+export function meta() {
+  return [
+    { title: "Clients Management - Spread" },
+    { name: "description", content: "Manage client accounts, permissions, and settings with Spread's client management tools" },
+  ];
+}
 
 export default function Clients() {
   return (

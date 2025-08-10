@@ -1,4 +1,9 @@
-import React from 'react';
+export function meta() {
+  return [
+    { title: "Social Analytics - Spread" },
+    { name: "description", content: "Track social media performance and engagement metrics with Spread's comprehensive analytics dashboard" },
+  ];
+}
 
 export default function SocialAnalytics() {
   return (

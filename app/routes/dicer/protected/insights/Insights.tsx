@@ -1,4 +1,9 @@
-import React from 'react';
+export function meta() {
+  return [
+    { title: "Insights - Spread" },
+    { name: "description", content: "Get detailed analytics and performance metrics for your social media campaigns with Spread's insights dashboard" },
+  ];
+}
 
 export default function Insights() {
   return (

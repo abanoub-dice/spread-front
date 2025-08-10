@@ -1,4 +1,9 @@
-import React from 'react';
+export function meta() {
+  return [
+    { title: "Content Manager - Spread" },
+    { name: "description", content: "Create, edit, and manage your social media content with Spread's powerful content management tools" },
+  ];
+}
 
 export default function ContentManager() {
   return (

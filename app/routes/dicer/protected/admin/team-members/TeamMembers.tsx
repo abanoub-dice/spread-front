@@ -1,8 +1,14 @@
-import React from 'react';
 import TeamMembersTable from './components/TeamMembersTable';
 import { Button, Typography } from '@mui/material';
 import AddMemberModal from './components/AddMemberModal';
 import { useState } from 'react';
+
+export function meta() {
+  return [
+    { title: "Team Members - Spread" },
+    { name: "description", content: "Manage team members, roles, and permissions with Spread's team management tools" },
+  ];
+}
 
 const accounts = [
   { id: 1, name: 'Main Company', logo: '', pmp_link: '', description: '', monthly_posts_limit: 30, created_at: '', updated_at: '', deleted_at: null },

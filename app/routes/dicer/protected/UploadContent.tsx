@@ -1,4 +1,9 @@
-import React from 'react';
+export function meta() {
+  return [
+    { title: "Upload Content - Spread" },
+    { name: "description", content: "Upload and manage your media content with Spread's easy-to-use content upload tools" },
+  ];
+}
 
 export default function UploadContent() {
   return (
