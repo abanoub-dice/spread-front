@@ -7,7 +7,7 @@ A feature-rich, production-ready React application template built with modern te
 - ⚛️ React 19 with TypeScript support
 - 🎨 Material-UI (MUI) v7 for beautiful, responsive UI components
 - 📱 React Router v7 for advanced routing capabilities
-- 🎯 Redux Toolkit for state management
+- 🎯 Zustand for lightweight state management
 - 🔄 React Query for efficient data fetching and caching
 - 📝 Form handling with React Hook Form and Yup validation
 - 🎨 Styling with Tailwind CSS and Styled Components
@@ -22,7 +22,7 @@ A feature-rich, production-ready React application template built with modern te
 - TypeScript
 - React Router 7
 - Material-UI 7
-- Redux Toolkit
+- Zustand
 - React Query
 - React Hook Form
 - Tailwind CSS
@@ -43,8 +43,8 @@ A feature-rich, production-ready React application template built with modern te
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/DicemaAdv/activation-progress-hub-front.git
-cd Operation Project Tracker
+git clone https://github.com/abanoub-dice/spread-front.git
+cd spread-front
 ```
 
 2. Install dependencies:
@@ -80,17 +80,70 @@ Start the production server:
 npm start
 ```
 
+## 🐳 Docker Support
+
+The application includes Docker configuration for easy deployment and development.
+
+### Using Docker Compose (Recommended)
+
+Run the application using Docker Compose:
+```bash
+docker-compose up --build
+```
+
+The application will be available at `http://localhost:3003`
+
+### Using Docker Directly
+
+Build the Docker image:
+```bash
+docker build -t spread-frontend .
+```
+
+Run the container:
+```bash
+docker run -p 3003:3000 spread-frontend
+```
+
+### Docker Features
+
+- **Multi-stage build** for optimized production images
+- **Health checks** for container monitoring
+- **Production-ready** configuration
+- **Automatic restart** policy
+- **Port mapping** (3003:3000)
+
 ## 📦 Project Structure
 
 ```
-├── src/
+├── app/
 │   ├── components/     # Reusable UI components
 │   ├── pages/         # Page components
-│   ├── hooks/         # Custom React hooks
-│   ├── store/         # Redux store configuration
-│   ├── services/      # API services
-│   ├── utils/         # Utility functions
-│   └── types/         # TypeScript type definitions
+│   ├── layouts/       # Layout components
+│   ├── routes/        # Route components
+│   ├── utils/         # Utility functions and stores
+│   │   ├── store/     # Zustand stores
+│   │   │   ├── userStore.ts      # User authentication store
+│   │   │   ├── dialogueStore.ts  # Dialog/modal store
+│   │   │   ├── loaderStore.ts    # Loading state store
+│   │   │   └── zustandHooks.ts   # Zustand hooks
+│   │   ├── api/       # API services
+│   │   │   ├── authApis.ts       # Authentication APIs
+│   │   │   └── axiosInstance.ts  # Axios configuration
+│   │   ├── theme/     # Theme configuration
+│   │   │   ├── theme.ts          # Main theme
+│   │   │   ├── palette.ts        # Color palette
+│   │   │   ├── typography.ts     # Typography styles
+│   │   │   └── types.ts          # Theme types
+│   │   ├── interfaces/ # TypeScript interfaces
+│   │   │   ├── user.ts           # User types
+│   │   │   ├── category.ts       # Category types
+│   │   │   └── projects/         # Project interfaces
+│   │   ├── constants/ # Constants
+│   │   │   └── queryKeys.ts      # React Query keys
+│   │   └── date/      # Date utilities
+│   │       └── dayjs.ts          # Day.js configuration
+│   └── assets/        # Static assets
 ├── public/            # Static assets
 └── build/            # Production build output
 ```
@@ -113,9 +166,12 @@ The project implements robust form handling with:
 
 ## 🔄 State Management
 
-- Redux Toolkit for global state management
-- React Query for server state management
-- Local state management with React hooks
+- **Zustand** for lightweight global state management
+  - User authentication state
+  - Dialog/modal state
+  - Loading state
+- **React Query** for server state management
+- **Local state** management with React hooks
 
 ## 🚀 Deployment
 
@@ -132,7 +188,7 @@ The application can be deployed to any platform that supports Node.js applicatio
 - [React Documentation](https://react.dev/)
 - [Material-UI Documentation](https://mui.com/)
 - [React Router Documentation](https://reactrouter.com/)
-- [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
+- [Zustand Documentation](https://zustand-demo.pmnd.rs/)
 - [React Query Documentation](https://tanstack.com/query/latest)
 
 

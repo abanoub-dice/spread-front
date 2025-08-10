@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import logo from '@/assets/spread-no-text.svg';
 import banner from '@/assets/auth/login_banner.png';
