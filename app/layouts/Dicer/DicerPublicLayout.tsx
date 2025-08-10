@@ -4,7 +4,6 @@ import logo from '@/assets/spread-no-text.svg';
 import banner from '@/assets/auth/login_banner.png';
 import { useEffect } from 'react';
 import { useUserStore } from '~/utils/store/zustandHooks';
-import { UserType } from '~/utils/interfaces/user';
 
 const containerSx = {
   display: 'flex',
@@ -52,7 +51,8 @@ export default function DicerPublicLayout() {
         return;
       }
       if (authenticated && user) {
-        if (user.type === UserType.CLIENT) {
+        // Check if user has account_id property (ClientUser) or role property (DicerUser)
+        if (!('role' in user)) {
           navigate('/client', { replace: true });
         } else {
           navigate('/dicer', { replace: true });

@@ -9,7 +9,7 @@ export function meta() {
 }
 
 const Login: FC = () => {
-  return <LoginForm />;
+  return <LoginForm userType='dicer'/>;
 };
 
 export default Login;

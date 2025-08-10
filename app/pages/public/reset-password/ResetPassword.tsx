@@ -31,13 +31,12 @@ export function meta() {
   return [{ title: 'Reset Password' }, { name: 'description', content: 'Reset your password' }];
 }
 
-export default function ResetPassword() {
+export default function ResetPassword({ userType }: { userType: 'dicer' | 'client' }) {
   const navigate = useNavigate();
   const { showToaster } = useToaster();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
-  const location = useLocation();
-  const userType = location.pathname.includes('/dicer/') ? 'dicer' : 'client';
+  const email = searchParams.get('email');
 
   const {
     register,
@@ -50,18 +49,49 @@ export default function ResetPassword() {
 
   const resetPasswordMutation = useMutation({
     mutationFn: (data: ResetPasswordFormData) => {
-      if (!token) {
-        showToaster('please use the link provided in the email', 'error');
-        navigate(`/${userType}/forgot-password`, { replace: true });
+      if (!token || !email) {
+        showToaster('Please use the link provided in the email', 'error');
       }
-      return resetPassword({ token: token as string, password: data.password });
+      return resetPassword(
+        {
+          token: token as string,
+          email: email as string,
+          password: data.password,
+          password_confirmation: data.confirmPassword,
+        },
+        userType
+      );
     },
     onSuccess: () => {
       showToaster('Password has been reset successfully', 'success');
       navigate(`/${userType}/login`, { replace: true });
     },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      showToaster(error.response?.data?.message || 'Failed to reset password', 'error');
+    onError: (error: AxiosError<any>) => {
+      const errorData = error.response?.data?.errors;
+
+      if (errorData && typeof errorData === 'object') {
+        // Check if there's a token error
+        if (errorData.token && Array.isArray(errorData.token)) {
+          const tokenError = errorData.token[0];
+          if (tokenError && typeof tokenError === 'string' && 
+              (tokenError.includes('Invalid') || tokenError.includes('expired'))) {
+            showToaster('Invalid or expired reset token. Please request a new password reset link.', 'error');
+            navigate(`/${userType}/forgot-password`, { replace: true });
+            return;
+          }
+        }
+
+        // Handle other validation errors - show each as a separate toast
+        const errorMessages = Object.values(errorData).flat();
+
+        errorMessages.forEach((errorMsg: any) => {
+          if (typeof errorMsg === 'string') {
+            showToaster(errorMsg, 'error');
+          }
+        });
+      } else {
+        showToaster('Failed to reset password', 'error');
+      }
     },
   });
 
@@ -69,7 +99,7 @@ export default function ResetPassword() {
     resetPasswordMutation.mutate(data);
   };
 
-  if (!token) {
+  if (!token || !email) {
     return (
       <Box
         sx={{
@@ -82,7 +112,7 @@ export default function ResetPassword() {
         }}
       >
         <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
-          Invalid or missing reset token. Please request a new password reset link.
+          Invalid or missing reset token or email. Please request a new password reset link.
         </Typography>
       </Box>
     );
@@ -123,13 +153,21 @@ export default function ResetPassword() {
           gap: 3,
         }}
       >
+        {/* Hidden username field for accessibility */}
+        <input
+          type="text"
+          name="username"
+          autoComplete="username"
+          style={{ display: 'none' }}
+          defaultValue={email || ''}
+        />
+
         <TextField
           label="New Password"
           name="password"
           type="password"
           error={errors.password?.message}
           register={register}
-          isRequired
           autoComplete="new-password"
           showPasswordToggle
         />
@@ -140,7 +178,6 @@ export default function ResetPassword() {
           type="password"
           error={errors.confirmPassword?.message}
           register={register}
-          isRequired
           autoComplete="new-password"
           showPasswordToggle
         />

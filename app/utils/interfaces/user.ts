@@ -20,11 +20,11 @@ export interface User {
 export interface LoginCredentials {
   email: string;
   password: string;
-  userType?: 'dicer' | 'client';
+  turnstileToken?: string;
 }
 
 export interface LoginResponse {
-  access_token: string;
+  token: string;
   user: AppUser;
 }
 
@@ -56,11 +56,6 @@ export interface UserFormData extends Omit<CreateUserData, 'password'> {
   password?: string;
 }
 
-export enum UserType {
-  DICER = 'dicer',
-  CLIENT = 'client',
-}
-
 export enum UserRole {
   ADMIN = 'admin',
   ACCOUNT_MANAGER = 'Account Manager',
@@ -70,7 +65,6 @@ export interface DicerUser {
   id: number;
   name: string;
   email: string;
-  type: UserType;
   created_at: string;
   updated_at: string;
   role: UserRole;
@@ -85,7 +79,6 @@ export interface ClientUser {
   deleted_at: string | null;
   created_at: string;
   updated_at: string;
-  type: UserType;
 }
 
 export type AppUser = DicerUser | ClientUser; 

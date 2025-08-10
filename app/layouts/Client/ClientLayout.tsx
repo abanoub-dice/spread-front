@@ -1,7 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useUserStore } from '~/utils/store/zustandHooks';
-import { UserType } from '~/utils/interfaces/user';
 import Navbar from '../../components/shared/navbar/Navbar';
 import Banner from '../../components/client/Banner';
 
@@ -15,7 +14,7 @@ export default function Layout() {
         checkAuth();
         return;
       }
-      if (authenticated && user && user.type !== UserType.CLIENT) {
+      if (authenticated && user && ('role' in user)) {
         navigate(`/dicer`, { replace: true });
       }
     } else {

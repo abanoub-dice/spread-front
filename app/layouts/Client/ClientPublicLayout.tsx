@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import logo from '@/assets/auth/logo.svg';
 import banner from '@/assets/auth/login_banner.png';
 import { useUserStore } from '~/utils/store/zustandHooks';
-import { UserType } from '~/utils/interfaces/user';
 
 const containerSx = {
   display: 'flex',
@@ -64,7 +63,8 @@ export default function ClientPublicLayout() {
         return;
       }
       if (authenticated && user) {
-        if (user.type === UserType.CLIENT) {
+        // Check if user has role property (DicerUser)
+        if (!('role' in user)) {
           navigate('/client', { replace: true });
         } else {
           navigate('/dicer', { replace: true });

@@ -9,7 +9,7 @@ export function meta() {
 }
 
 const ForgotPassword: FC = () => {
-  return <ForgotPasswordForm />;
+  return <ForgotPasswordForm userType="client" />;
 };
 
 export default ForgotPassword;

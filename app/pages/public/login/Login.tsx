@@ -8,11 +8,12 @@ import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
 import { userLogin } from '~/utils/api/authApis';
 import type { LoginCredentials } from '~/utils/interfaces/user';
-import { UserType, UserRole } from '~/utils/interfaces/user';
 import { useUserStore } from '~/utils/store/zustandHooks';
 import type { AxiosError } from 'axios';
 import type { ErrorResponse } from '~/utils/api/axiosInstance';
 import { useToaster } from '~/components/Toaster';
+import Turnstile from 'react-turnstile';
+import { useState } from 'react';
 
 const schema = yup
   .object({
@@ -24,6 +25,7 @@ const schema = yup
       .string()
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters'),
+    turnstileToken: yup.string().required('Please complete the security check'),
   })
   .required();
 
@@ -31,31 +33,32 @@ export function meta() {
   return [{ title: 'Login' }, { name: 'description', content: 'Login to your account' }];
 }
 
-export default function LoginForm() {
+export default function LoginForm({ userType }: { userType: 'dicer' | 'client' }) {
   const theme = useTheme();
   const { setUser } = useUserStore();
   const navigate = useNavigate();
-  const location = useLocation();
   const { showToaster } = useToaster();
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
 
-  // Determine user type from URL path
-  const userType = location.pathname.includes('/dicer/') ? 'dicer' : 'client';
+  // Get Turnstile site key from environment
+  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginCredentials>({
-    // resolver: yupResolver(schema),  // TODO: Uncomment this when API is ready
+    setValue,
+  } = useForm<LoginCredentials & { turnstileToken: string }>({
+    resolver: yupResolver(schema),
     mode: 'onChange',
   });
 
   const loginMutation = useMutation({
-    mutationFn: (data: LoginCredentials) => userLogin({ ...data, userType }),
+    mutationFn: (data: LoginCredentials) => userLogin(data, userType as 'dicer' | 'client'),
     onSuccess: data => {
-      setUser(data.user, data.access_token);
+      setUser(data.user, data.token);
       // Navigate based on user type
-      const redirectPath = userType === 'client' ? '/client' : '/';
+      const redirectPath = userType === 'client' ? '/client' : '/dicer';
       navigate(redirectPath, { replace: true });
     },
     onError: (error: AxiosError<ErrorResponse>) => {
@@ -63,43 +66,15 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (data: LoginCredentials) => {
-    // TODO: Uncomment this when API is ready
-    // loginMutation.mutate(data);
+  const onSubmit = (data: LoginCredentials & { turnstileToken: string }) => {
+    // Only send email, password, and turnstileToken
+    const loginData = {
+      email: data.email,
+      password: data.password,
+      turnstileToken: turnstileToken,
+    };
 
-    const mockToken = 'mock-jwt-token-12345';
-
-    if (userType === 'dicer') {
-      // Use dicer user mock data
-      const dicerUser = {
-        id: 1,
-        name: 'John Doe',
-        email: 'john.doe@dicema.com',
-        type: UserType.DICER,
-        created_at: '2025-04-14T14:12:34.000000Z',
-        updated_at: '2025-04-24T13:11:29.000000Z',
-        role: UserRole.ADMIN,
-      };
-      setUser(dicerUser, mockToken);
-      navigate('/dicer', { replace: true });
-      showToaster('Login successful!', 'success');
-    } else {
-      // Use client user mock data
-      const clientUser = {
-        id: 2,
-        name: 'Sarah Johnson',
-        email: 'amir.haroun@dicema.com',
-        phone: '+15415190190',
-        account_id: 1,
-        deleted_at: null,
-        created_at: '2025-04-14T14:12:34.000000Z',
-        updated_at: '2025-04-24T13:11:29.000000Z',
-        type: UserType.CLIENT,
-      };
-      setUser(clientUser, mockToken);
-      navigate('/client', { replace: true });
-      showToaster('Login successful!', 'success');
-    }
+    loginMutation.mutate(loginData);
   };
 
   return (
@@ -157,6 +132,9 @@ export default function LoginForm() {
           showPasswordToggle
         />
 
+        {/* Hidden input for turnstile token validation */}
+        <input type="hidden" {...register('turnstileToken')} value={turnstileToken} />
+
         <Box
           sx={{
             display: 'flex',
@@ -179,6 +157,39 @@ export default function LoginForm() {
             Forgot Password?
           </Typography>
         </Box>
+
+        {/* Turnstile Widget */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 2,
+            borderRadius: '10px',
+            overflow: 'hidden',
+          }}
+        >
+          <Turnstile
+            sitekey={siteKey}
+            onVerify={token => {
+              setTurnstileToken(token);
+              setValue('turnstileToken', token);
+            }}
+            onError={() => {
+              setTurnstileToken('');
+              setValue('turnstileToken', '');
+              showToaster('Security check failed. Please try again.', 'error');
+            }}
+            onExpire={() => {
+              setTurnstileToken('');
+              setValue('turnstileToken', '');
+            }}
+          />
+        </Box>
+        {errors.turnstileToken && (
+          <Typography variant="body2" color="error" sx={{ textAlign: 'center' }}>
+            {errors.turnstileToken.message}
+          </Typography>
+        )}
 
         <FormButton label="Log In" isLoading={loginMutation.isPending} sx={{ mt: 2 }} />
       </Box>

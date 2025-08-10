@@ -17,7 +17,6 @@ import { useLoader } from './utils/store/zustandHooks';
 import { ToasterProvider } from './components/Toaster';
 import { Loader } from './components/Loader';
 import Dialog from './components/Dialog';
-import { UserType } from './utils/interfaces/user';
 
 // Create a client
 const queryClient = new QueryClient({

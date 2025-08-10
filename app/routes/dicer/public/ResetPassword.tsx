@@ -9,7 +9,7 @@ export function meta() {
 }
 
 const ResetPassword: FC = () => {
-  return <ResetPasswordForm />;
+  return <ResetPasswordForm userType="dicer" />;
 };
 
 export default ResetPassword;

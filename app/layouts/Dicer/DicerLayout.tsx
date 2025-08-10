@@ -5,7 +5,6 @@ import DicerNavigation from '../../components/dicer/tabs/DicerNavigation';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '~/utils/store/zustandHooks';
-import { UserType } from '~/utils/interfaces/user';
 
 interface Account {
   id: string;
@@ -26,7 +25,7 @@ export default function Layout() {
         checkAuth();
         return;
       }
-      if (authenticated && user && user.type !== UserType.DICER) {
+      if (authenticated && user && !('role' in user)) {
         navigate(`/client`, { replace: true });
       }
     } else {

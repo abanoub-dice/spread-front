@@ -8,8 +8,9 @@ export const logout = async () => {
   return res;
 };
 
-export const userLogin = async (data: LoginCredentials): Promise<LoginResponse> => {
-  const res = await axiosInstance.post('/v1/auth/login', data);
+export const userLogin = async (data: LoginCredentials, userType: 'dicer' | 'client'): Promise<LoginResponse> => {
+  const endpoint = `/${userType}/auth/login`
+  const res = await axiosInstance.post(endpoint, data);
 
   return res.data;
 };
@@ -19,12 +20,14 @@ export const getCurrentUser = async (): Promise<AppUser> => {
   return res.data;
 };
 
-export const sendResetLink = async (data: { email: string }): Promise<any> => {
-	const res = await axiosInstance.post('/v1/auth/forgot-password', data);
+export const sendResetLink = async (data: { email: string; turnstileToken: string }, userType: 'dicer' | 'client'): Promise<any> => {
+	const endpoint =  `/${userType}/auth/forgot-password`
+	const res = await axiosInstance.post(endpoint, data);
 	return res.data;
 };
 
-export const resetPassword = async (data: { token: string; password: string }): Promise<any> => {
-	const res = await axiosInstance.put(`/v1/auth/reset-password?token=${data.token}`, { password: data.password });
+export const resetPassword = async (data: { token: string; email: string; password: string; password_confirmation: string }, userType: 'dicer' | 'client'): Promise<any> => {
+	const endpoint = `/${userType}/auth/reset-password`;
+	const res = await axiosInstance.post(endpoint, data);
 	return res.data;
 };
