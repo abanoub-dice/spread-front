@@ -111,9 +111,10 @@ export default function ForgotPassword({ userType }: { userType: 'dicer' | 'clie
         }}
       >
         <TextField
-          label="email"
+          label="Email"
           name="email"
           type="email"
+          placeholder="Enter your email"
           error={errors.email?.message}
           register={register}
           autoComplete="email"

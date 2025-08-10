@@ -22,6 +22,8 @@ interface TextFieldProps {
   autoComplete?: string;
   showPasswordToggle?: boolean;
   disabled?: boolean;
+  placeholder?: string;
+  startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
   sx?: SxProps<Theme>;
 }
@@ -35,6 +37,8 @@ export const TextField = ({
   autoComplete,
   showPasswordToggle = false,
   disabled = false,
+  placeholder,
+  startAdornment,
   endAdornment,
   sx,
 }: TextFieldProps) => {
@@ -62,44 +66,37 @@ export const TextField = ({
         disabled={disabled}
         sx={{ width: '100%' }}
       >
-        {label && (
-          <InputLabel
-            htmlFor={name}
-            sx={{
-              transform: 'translate(14px, 12px) scale(1)',
-              '&.Mui-focused, &.MuiFormLabel-filled': {
-                transform: 'translate(14px, -10px) scale(0.75)',
-              },
-            }}
-          >
-            {label}
-          </InputLabel>
-        )}
         <OutlinedInput
           id={name}
-          label={label}
           type={showPasswordToggle ? (showPassword ? 'text' : 'password') : type}
           autoComplete={autoComplete}
           disabled={disabled}
+          placeholder={placeholder}
           {...register(name)}
+          startAdornment={startAdornment}
           endAdornment={endAdornment || passwordToggle}
           error={!!error}
           sx={{
             backgroundColor: 'background.defaultSecondary',
             borderRadius: '8px',
+            minHeight: '54px',
             '& .MuiInputBase-input': {
               fontSize: { xs: '0.875rem', sm: '0.875rem', md: '0.875rem' },
-              padding: '12px 16px',
-              color: '#333',
+              padding: '16px 16px 8px 16px',
+              color: '#000',
               '&::placeholder': {
-                color: '#999',
+                color: '#202022',
                 fontSize: '0.875rem',
                 opacity: 1,
               },
+              '&:focus::placeholder': {
+                opacity: 0,
+              },
             },
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: 'border.neutralSecondary',
+              borderColor: '#e0e0e0',
               borderWidth: '1px',
+              borderStyle: 'solid',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
               borderColor: '#ccc',
@@ -119,6 +116,23 @@ export const TextField = ({
             },
           }}
         />
+        {label && (
+          <Typography
+            variant="caption"
+            sx={{
+              position: 'absolute',
+              top: '8px',
+              left: '16px',
+              color: '#666',
+              fontSize: '0.75rem',
+              fontWeight: 400,
+              zIndex: 1,
+              pointerEvents: 'none',
+            }}
+          >
+            {label}
+          </Typography>
+        )}
       </FormControl>
       {error && (
         <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1 }}>

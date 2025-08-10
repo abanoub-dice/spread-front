@@ -73,9 +73,15 @@ export default function ResetPassword({ userType }: { userType: 'dicer' | 'clien
         // Check if there's a token error
         if (errorData.token && Array.isArray(errorData.token)) {
           const tokenError = errorData.token[0];
-          if (tokenError && typeof tokenError === 'string' && 
-              (tokenError.includes('Invalid') || tokenError.includes('expired'))) {
-            showToaster('Invalid or expired reset token. Please request a new password reset link.', 'error');
+          if (
+            tokenError &&
+            typeof tokenError === 'string' &&
+            (tokenError.includes('Invalid') || tokenError.includes('expired'))
+          ) {
+            showToaster(
+              'Invalid or expired reset token. Please request a new password reset link.',
+              'error'
+            );
             navigate(`/${userType}/forgot-password`, { replace: true });
             return;
           }
@@ -99,24 +105,24 @@ export default function ResetPassword({ userType }: { userType: 'dicer' | 'clien
     resetPasswordMutation.mutate(data);
   };
 
-  if (!token || !email) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: '400px',
-          mx: 'auto',
-        }}
-      >
-        <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
-          Invalid or missing reset token or email. Please request a new password reset link.
-        </Typography>
-      </Box>
-    );
-  }
+  // if (!token || !email) {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         display: 'flex',
+  //         flexDirection: 'column',
+  //         alignItems: 'center',
+  //         width: '100%',
+  //         maxWidth: '400px',
+  //         mx: 'auto',
+  //       }}
+  //     >
+  //       <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
+  //         Invalid or missing reset token or email. Please request a new password reset link.
+  //       </Typography>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box
@@ -170,6 +176,7 @@ export default function ResetPassword({ userType }: { userType: 'dicer' | 'clien
           register={register}
           autoComplete="new-password"
           showPasswordToggle
+          placeholder="Enter your new password"
         />
 
         <TextField
@@ -180,6 +187,7 @@ export default function ResetPassword({ userType }: { userType: 'dicer' | 'clien
           register={register}
           autoComplete="new-password"
           showPasswordToggle
+          placeholder="Confirm your new password"
         />
 
         <FormButton

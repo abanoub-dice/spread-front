@@ -115,7 +115,8 @@ export default function LoginForm({ userType }: { userType: 'dicer' | 'client' }
         <TextField
           name="email"
           type="email"
-          label="email"
+          label="Email"
+          placeholder="Enter your email"
           error={errors.email?.message}
           register={register}
           autoComplete="email"
@@ -125,7 +126,8 @@ export default function LoginForm({ userType }: { userType: 'dicer' | 'client' }
         <TextField
           name="password"
           type="password"
-          label="password"
+          label="Password"
+          placeholder="Enter your password"
           error={errors.password?.message}
           register={register}
           autoComplete="current-password"
