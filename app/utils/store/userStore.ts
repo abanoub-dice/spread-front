@@ -37,7 +37,7 @@ export const useUserStore = create<UserStore>()(
         set({ authenticated: false, user: null, token: null });
       },
 
-      setLoading: (loading) => set({ isLoading: loading }),
+      setLoading: loading => set({ isLoading: loading }),
 
       checkAuth: async () => {
         set({ isLoading: true });
@@ -58,7 +58,7 @@ export const useUserStore = create<UserStore>()(
     }),
     {
       name: 'token', // localStorage key
-      partialize: (state) => ({ token: state.token }), // store ONLY the token
+      partialize: state => ({ token: state.token }), // store ONLY the token
     }
   )
 );

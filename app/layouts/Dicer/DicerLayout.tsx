@@ -18,7 +18,6 @@ export default function Layout() {
 
   const navigate = useNavigate();
   const { authenticated, user, checkAuth, token, resetUser } = useUserStore();
-
   useEffect(() => {
     if (token) {
       if (!authenticated) {

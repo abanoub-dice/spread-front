@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
-import { Box, Typography, useTheme } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
 import { userLogin } from '~/utils/api/authApis';
@@ -34,7 +34,6 @@ export function meta() {
 }
 
 export default function LoginForm({ userType }: { userType: 'dicer' | 'client' }) {
-  const theme = useTheme();
   const { setUser } = useUserStore();
   const navigate = useNavigate();
   const { showToaster } = useToaster();
@@ -56,10 +55,11 @@ export default function LoginForm({ userType }: { userType: 'dicer' | 'client' }
   const loginMutation = useMutation({
     mutationFn: (data: LoginCredentials) => userLogin(data, userType as 'dicer' | 'client'),
     onSuccess: data => {
-      setUser(data.user, data.token);
+      // Omit the roles array from user data
+      const { roles, ...userWithoutRoles } = data.user as any;
+      setUser(userWithoutRoles, data.token);
       // Navigate based on user type
-      const redirectPath = userType === 'client' ? '/client' : '/dicer';
-      navigate(redirectPath, { replace: true });
+      navigate(`/${userType}`, { replace: true });
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       showToaster(error.response?.data?.message || 'Failed to login', 'error');

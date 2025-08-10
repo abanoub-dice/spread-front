@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useUserStore } from '~/utils/store/zustandHooks';
-import { UserRole, UserType } from '~/utils/interfaces/user';
+import { UserRole } from '~/utils/interfaces/user';
 import {
   Calendar2,
   DocumentUpload,
