@@ -22,7 +22,7 @@ export const backgroundColor: Partial<TypeBackground> = {
 };
 
 export const text: Partial<TypeText> = {
-  dark: '#272220',
+  dark: '#202022',
   light: '#4b5563',
   gray: '#D8D1CD',
   brand: '#CB560A',

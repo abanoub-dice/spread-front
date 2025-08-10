@@ -85,7 +85,7 @@ export const TextField = ({
               padding: '16px 16px 8px 16px',
               color: '#000',
               '&::placeholder': {
-                color: '#202022',
+                color: 'text.dark',
                 fontSize: '0.875rem',
                 opacity: 1,
               },
@@ -94,19 +94,19 @@ export const TextField = ({
               },
             },
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#e0e0e0',
+              borderColor: '#D5D5DF',
               borderWidth: '1px',
               borderStyle: 'solid',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#ccc',
+              borderColor: '#D5D5DF',
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
               borderColor: 'primary.main',
               borderWidth: '1px',
             },
             '&.Mui-error': {
-              backgroundColor: '#fff5f5',
+              backgroundColor: 'background.defaultSecondary',
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'error.main',
               },
