@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useUserStore } from '../store/userStore';
 
 export interface ErrorResponse {
   message: string;
@@ -11,8 +12,8 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   function (config: any) {
     if (!config.url?.includes('/login')) {
-      const token = localStorage.getItem('token');
-      config.headers.Authorization = token ? `Bearer ${JSON.parse(token)}` : '';
+      const token = useUserStore.getState().token;
+      config.headers.Authorization = token ? `Bearer ${token}` : '';
     }
     return config;
   },

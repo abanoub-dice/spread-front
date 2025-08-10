@@ -1,9 +1,9 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { AppUser, ClientUser, DicerUser } from '../interfaces/user';
 import { UserRole, UserType } from '../interfaces/user';
-import { getCurrentUser } from '../api/authApis';
 
-// Mock data for development
+// --- Mock Data ---
 const dicerUser: DicerUser = {
   id: 1,
   name: 'John Doe',
@@ -26,9 +26,11 @@ const clientUser: ClientUser = {
   type: UserType.CLIENT,
 };
 
+// --- Store Types ---
 interface UserState {
   authenticated: boolean;
   user: AppUser | null;
+  token: string | null;
   isLoading: boolean;
 }
 
@@ -41,54 +43,46 @@ interface UserActions {
 
 type UserStore = UserState & UserActions;
 
-export const useUserStore = create<UserStore>((set) => ({
-  authenticated: false,
-  user: null,
-  isLoading: false,
-
-  setUser: (user: AppUser, token: string) => {
-    set({
-      authenticated: true,
-      user,
-    });
-    localStorage.setItem('token', JSON.stringify(token));
-  },
-
-  resetUser: () => {
-    set({
+// --- Store ---
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set, get) => ({
       authenticated: false,
       user: null,
-    });
-    localStorage.removeItem('token');
-  },
+      token: null,
+      isLoading: false,
 
-  setLoading: (loading: boolean) => {
-    set({ isLoading: loading });
-  },
+      setUser: (user, token) => {
+        set({ authenticated: true, user, token });
+      },
 
-  checkAuth: async () => {
-    try {
-      set({ isLoading: true });
-      const token = localStorage.getItem('token');
-      if (!token) {
-        set({ isLoading: false });
-        return;
-      }
-      
-      // const user = await getCurrentUser();
-      const user = dicerUser; // Using mock data for now
-      set({
-        authenticated: true,
-        user,
-        isLoading: false,
-      });
-    } catch (error) {
-      set({
-        authenticated: false,
-        user: null,
-        isLoading: false,
-      });
-      localStorage.removeItem('token');
+      resetUser: () => {
+        set({ authenticated: false, user: null, token: null });
+      },
+
+      setLoading: (loading) => set({ isLoading: loading }),
+
+      checkAuth: async () => {
+        set({ isLoading: true });
+
+        const token = get().token;
+        if (!token) {
+          set({ isLoading: false });
+          return;
+        }
+
+        try {
+          // const user = await getCurrentUser(); // real API
+          const user = dicerUser; // mock for now
+          set({ authenticated: true, user, isLoading: false });
+        } catch {
+          set({ authenticated: false, user: null, token: null, isLoading: false });
+        }
+      },
+    }),
+    {
+      name: 'token', // localStorage key
+      partialize: (state) => ({ token: state.token }), // store ONLY the token
     }
-  },
-}));
+  )
+);

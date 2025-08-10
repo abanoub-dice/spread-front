@@ -7,11 +7,10 @@ import Banner from '../../components/client/Banner';
 
 export default function Layout() {
   const navigate = useNavigate();
-  const { authenticated, user, checkAuth } = useUserStore();
-  const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
+  const { authenticated, user, checkAuth, token, resetUser } = useUserStore();
 
   useEffect(() => {
-    if (hasToken) {
+    if (token) {
       if (!authenticated) {
         checkAuth();
         return;
@@ -23,13 +22,13 @@ export default function Layout() {
       navigate('/client/login', { replace: true });
       return;
     }
-  }, [hasToken, authenticated, user, navigate, checkAuth]);
+  }, [token, authenticated, user, navigate, checkAuth]);
 
   if (!authenticated) return null;
 
   return (
     <div className="h-screen w-full bg-[#f7f9fa]">
-      <Navbar avatarUrl="https://i.pravatar.cc/150?img=3" onLogout={() => alert('Logout')} />
+      <Navbar avatarUrl="https://i.pravatar.cc/150?img=3" onLogout={resetUser} />
       <Banner />
       <main>
         <Outlet />

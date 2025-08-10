@@ -8,6 +8,7 @@ import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
 import { userLogin } from '~/utils/api/authApis';
 import type { LoginCredentials } from '~/utils/interfaces/user';
+import { UserType, UserRole } from '~/utils/interfaces/user';
 import { useUserStore } from '~/utils/store/zustandHooks';
 import type { AxiosError } from 'axios';
 import type { ErrorResponse } from '~/utils/api/axiosInstance';
@@ -45,7 +46,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginCredentials>({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),  // TODO: Uncomment this when API is ready
     mode: 'onChange',
   });
 
@@ -63,7 +64,42 @@ export default function LoginForm() {
   });
 
   const onSubmit = (data: LoginCredentials) => {
-    loginMutation.mutate(data);
+    // TODO: Uncomment this when API is ready
+    // loginMutation.mutate(data);
+
+    const mockToken = 'mock-jwt-token-12345';
+
+    if (userType === 'dicer') {
+      // Use dicer user mock data
+      const dicerUser = {
+        id: 1,
+        name: 'John Doe',
+        email: 'john.doe@dicema.com',
+        type: UserType.DICER,
+        created_at: '2025-04-14T14:12:34.000000Z',
+        updated_at: '2025-04-24T13:11:29.000000Z',
+        role: UserRole.ADMIN,
+      };
+      setUser(dicerUser, mockToken);
+      navigate('/dicer', { replace: true });
+      showToaster('Login successful!', 'success');
+    } else {
+      // Use client user mock data
+      const clientUser = {
+        id: 2,
+        name: 'Sarah Johnson',
+        email: 'amir.haroun@dicema.com',
+        phone: '+15415190190',
+        account_id: 1,
+        deleted_at: null,
+        created_at: '2025-04-14T14:12:34.000000Z',
+        updated_at: '2025-04-24T13:11:29.000000Z',
+        type: UserType.CLIENT,
+      };
+      setUser(clientUser, mockToken);
+      navigate('/client', { replace: true });
+      showToaster('Login successful!', 'success');
+    }
   };
 
   return (

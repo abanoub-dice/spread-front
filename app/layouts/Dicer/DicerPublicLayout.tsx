@@ -43,11 +43,10 @@ const logoBoxSx = {
 
 export default function DicerPublicLayout() {
   const navigate = useNavigate();
-  const { authenticated, user, checkAuth } = useUserStore();
-  const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
+  const { authenticated, user, checkAuth, token } = useUserStore();
 
   useEffect(() => {
-    if (hasToken) {
+    if (token) {
       if (!authenticated) {
         checkAuth();
         return;
@@ -60,7 +59,7 @@ export default function DicerPublicLayout() {
         }
       }
     }
-  }, [hasToken, authenticated, user, navigate, checkAuth]);
+  }, [token, authenticated, user, navigate, checkAuth]);
 
   return (
     <Box sx={containerSx}>

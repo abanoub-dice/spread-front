@@ -18,11 +18,10 @@ export default function Layout() {
   const [selectedAccount, setSelectedAccount] = useState<Account | undefined>();
 
   const navigate = useNavigate();
-  const { authenticated, user, checkAuth } = useUserStore();
-  const hasToken = typeof window !== 'undefined' && localStorage.getItem('token');
+  const { authenticated, user, checkAuth, token, resetUser } = useUserStore();
 
   useEffect(() => {
-    if (hasToken) {
+    if (token) {
       if (!authenticated) {
         checkAuth();
         return;
@@ -34,7 +33,7 @@ export default function Layout() {
       navigate('/dicer/login', { replace: true });
       return;
     }
-  }, [hasToken, authenticated, user, navigate, checkAuth]);
+  }, [token, authenticated, user, navigate, checkAuth]);
 
   const handleAccountSelect = (account: Account) => {
     setSelectedAccount(account);
@@ -46,7 +45,7 @@ export default function Layout() {
 
   return (
     <div className="h-screen w-full">
-      <Navbar avatarUrl={undefined} onLogout={() => alert('Logout')} />
+      <Navbar avatarUrl={undefined} onLogout={resetUser} />
       <Box
         sx={{
           display: 'flex',
