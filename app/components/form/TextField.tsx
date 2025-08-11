@@ -82,7 +82,7 @@ export const TextField = ({
             minHeight: '54px',
             '& .MuiInputBase-input': {
               fontSize: { xs: '0.875rem', sm: '0.875rem', md: '0.875rem' },
-              padding: '16px 16px 8px 16px',
+              padding: label ? '16px 16px 8px 16px' : '16px',
               color: '#000',
               '&::placeholder': {
                 color: 'text.dark',
@@ -106,12 +106,12 @@ export const TextField = ({
               borderWidth: '1px',
             },
             '&.Mui-error': {
-              backgroundColor: 'background.defaultSecondary',
+              backgroundColor: 'semantic.errorBg',
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'error.main',
+                borderColor: 'error',
               },
               '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'error.main',
+                borderColor: 'semantic.error',
               },
             },
           }}

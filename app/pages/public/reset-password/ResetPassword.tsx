@@ -169,25 +169,23 @@ export default function ResetPassword({ userType }: { userType: 'dicer' | 'clien
         />
 
         <TextField
-          label="New Password"
           name="password"
           type="password"
           error={errors.password?.message}
           register={register}
           autoComplete="new-password"
           showPasswordToggle
-          placeholder="Enter your new password"
+          placeholder="New Password"
         />
 
         <TextField
-          label="Confirm Password"
           name="confirmPassword"
           type="password"
           error={errors.confirmPassword?.message}
           register={register}
           autoComplete="new-password"
           showPasswordToggle
-          placeholder="Confirm your new password"
+          placeholder="Confirm Password"
         />
 
         <FormButton
