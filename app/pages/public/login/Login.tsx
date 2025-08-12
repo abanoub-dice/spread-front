@@ -49,7 +49,8 @@ export default function LoginForm({ userType }: { userType: 'dicer' | 'client' }
     setValue,
   } = useForm<LoginCredentials & { turnstileToken: string }>({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'onBlur',
+    criteriaMode: 'all',
   });
 
   const loginMutation = useMutation({
@@ -67,14 +68,7 @@ export default function LoginForm({ userType }: { userType: 'dicer' | 'client' }
   });
 
   const onSubmit = (data: LoginCredentials & { turnstileToken: string }) => {
-    // Only send email, password, and turnstileToken
-    const loginData = {
-      email: data.email,
-      password: data.password,
-      turnstileToken: turnstileToken,
-    };
-
-    loginMutation.mutate(loginData);
+    loginMutation.mutate(data);
   };
 
   return (

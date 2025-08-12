@@ -14,7 +14,7 @@ interface UserState {
 interface UserActions {
   setUser: (user: AppUser, token: string) => void;
   resetUser: () => void;
-  checkAuth: () => Promise<void>;
+  checkAuth: (userType: 'dicer' | 'client') => Promise<void>;
   setLoading: (loading: boolean) => void;
 }
 
@@ -39,7 +39,7 @@ export const useUserStore = create<UserStore>()(
 
       setLoading: loading => set({ isLoading: loading }),
 
-      checkAuth: async () => {
+      checkAuth: async (userType: 'dicer' | 'client') => {
         set({ isLoading: true });
 
         const token = get().token;
@@ -49,7 +49,8 @@ export const useUserStore = create<UserStore>()(
         }
 
         try {
-          const user = await getCurrentUser(); // real API
+          const { user } = await getCurrentUser(userType); // real API
+
           set({ authenticated: true, user, isLoading: false });
         } catch {
           set({ authenticated: false, user: null, token: null, isLoading: false });

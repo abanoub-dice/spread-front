@@ -44,7 +44,7 @@ export default function ResetPassword({ userType }: { userType: 'dicer' | 'clien
     formState: { errors },
   } = useForm<ResetPasswordFormData>({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const resetPasswordMutation = useMutation({
@@ -105,24 +105,24 @@ export default function ResetPassword({ userType }: { userType: 'dicer' | 'clien
     resetPasswordMutation.mutate(data);
   };
 
-  // if (!token || !email) {
-  //   return (
-  //     <Box
-  //       sx={{
-  //         display: 'flex',
-  //         flexDirection: 'column',
-  //         alignItems: 'center',
-  //         width: '100%',
-  //         maxWidth: '400px',
-  //         mx: 'auto',
-  //       }}
-  //     >
-  //       <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
-  //         Invalid or missing reset token or email. Please request a new password reset link.
-  //       </Typography>
-  //     </Box>
-  //   );
-  // }
+  if (!token || !email) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: '400px',
+          mx: 'auto',
+        }}
+      >
+        <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
+          Invalid or missing reset token or email. Please request a new password reset link.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box

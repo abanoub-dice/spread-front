@@ -59,7 +59,7 @@ export default function ClientPublicLayout() {
   useEffect(() => {
     if (token) {
       if (!authenticated) {
-        checkAuth();
+        checkAuth('client');
         return;
       }
       if (authenticated && user) {

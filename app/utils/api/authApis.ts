@@ -8,26 +8,35 @@ export const logout = async () => {
   return res;
 };
 
-export const userLogin = async (data: LoginCredentials, userType: 'dicer' | 'client'): Promise<LoginResponse> => {
-  const endpoint = `/${userType}/auth/login`
+export const userLogin = async (
+  data: LoginCredentials,
+  userType: 'dicer' | 'client'
+): Promise<LoginResponse> => {
+  const endpoint = `/${userType}/auth/login`;
   const res = await axiosInstance.post(endpoint, data);
 
   return res.data;
 };
 
-export const getCurrentUser = async (): Promise<AppUser> => {
-  const res = await axiosInstance.get('/v1/auth/profile');
+export const getCurrentUser = async (userType: 'dicer' | 'client'): Promise<{ user: AppUser }> => {
+  const res = await axiosInstance.get(`/${userType}/auth/user`);
   return res.data;
 };
 
-export const sendResetLink = async (data: { email: string; turnstileToken: string }, userType: 'dicer' | 'client'): Promise<any> => {
-	const endpoint =  `/${userType}/auth/forgot-password`
-	const res = await axiosInstance.post(endpoint, data);
-	return res.data;
+export const sendResetLink = async (
+  data: { email: string; turnstileToken: string },
+  userType: 'dicer' | 'client'
+): Promise<any> => {
+  const endpoint = `/${userType}/auth/forgot-password`;
+  const res = await axiosInstance.post(endpoint, data);
+  return res.data;
 };
 
-export const resetPassword = async (data: { token: string; email: string; password: string; password_confirmation: string }, userType: 'dicer' | 'client'): Promise<any> => {
-	const endpoint = `/${userType}/auth/reset-password`;
-	const res = await axiosInstance.post(endpoint, data);
-	return res.data;
+export const resetPassword = async (
+  data: { token: string; email: string; password: string; password_confirmation: string },
+  userType: 'dicer' | 'client'
+): Promise<any> => {
+  const endpoint = `/${userType}/auth/reset-password`;
+  const res = await axiosInstance.post(endpoint, data);
+  return res.data;
 };

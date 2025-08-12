@@ -5,7 +5,6 @@ import {
   InputAdornment,
   IconButton,
   FormControl,
-  InputLabel,
 } from '@mui/material';
 import { Eye, EyeSlash } from 'iconsax-reactjs';
 

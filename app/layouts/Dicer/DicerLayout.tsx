@@ -21,7 +21,7 @@ export default function Layout() {
   useEffect(() => {
     if (token) {
       if (!authenticated) {
-        checkAuth();
+        checkAuth('dicer');
         return;
       }
       if (authenticated && user && !('role' in user)) {

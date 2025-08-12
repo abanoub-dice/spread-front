@@ -11,7 +11,7 @@ export default function Layout() {
   useEffect(() => {
     if (token) {
       if (!authenticated) {
-        checkAuth();
+        checkAuth('client');
         return;
       }
       if (authenticated && user && ('role' in user)) {

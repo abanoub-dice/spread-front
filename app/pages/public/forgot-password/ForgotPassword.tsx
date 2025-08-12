@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
-import { Box, Typography, useTheme } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { TextField } from '~/components/form/TextField';
 import { FormButton } from '~/components/form/FormButton';
 import { sendResetLink } from '~/utils/api/authApis';
@@ -31,7 +31,6 @@ export function meta() {
 }
 
 export default function ForgotPassword({ userType }: { userType: 'dicer' | 'client' }) {
-  const theme = useTheme();
   const { showToaster } = useToaster();
   const [turnstileToken, setTurnstileToken] = useState<string>('');
 
@@ -46,7 +45,7 @@ export default function ForgotPassword({ userType }: { userType: 'dicer' | 'clie
     reset,
   } = useForm<ForgotPasswordFormData & { turnstileToken: string }>({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const resetLinkMutation = useMutation({
